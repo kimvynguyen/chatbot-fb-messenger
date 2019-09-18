@@ -25,7 +25,7 @@ def verify():
 def webhook():
 
     # endpoint for processing incoming messaging events
-    params = {
+   ''' params = {
         "access_token": "EAAFvTbGl9ccBAEZBlWiBuLk6wdjWl6VvlLdNG3FTrzOozWKv1GXPRqU8Xv7QzUTlbSUsA5vOwApzUZCF4C0iRXjodzZA7imDw3OvDeJkBzn1ZBA14zeL5yfsoYQk7yqzG9pRd67psnxvCiRPcEneuAxYpawhx0sKvJLp56tiLaMFxcZClzqIeQucpCjxqoqUZD"
     }
     headers = {
@@ -58,12 +58,9 @@ def webhook():
             }
         ],
         "whitelisted_domains":["https://www.mykingdom.com.vn"],
-        })
+        })'''
 
     r = requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
-    send_message("","Cam on ban da lua chon Ichat lam nen tang")
-    send_attachment(sender_id)
-    send_button(sender_id)
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
 
@@ -85,7 +82,19 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    pass
+                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
+                    recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
+                    message_text = messaging_event["message"]["text"]  # the message's text
+                    if message_text=="Chia se":
+                        share(sender_id," ")
+                    elif message_text=="Thong tin san pham": 
+                        list_template(sender_id,"Danh muc san pham")
+                    elif message_text=="Do choi van dong":
+                        list_DCVD(sender_id,"")
+                    else:
+                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
+                        send_attachment(sender_id)
+                        send_button(sender_id)
 
     return "ok", 200
 
