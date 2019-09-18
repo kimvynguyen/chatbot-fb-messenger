@@ -5,9 +5,9 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
+import products
 
 app = Flask(__name__)
-
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -20,40 +20,39 @@ def verify():
 
     return "Hello world", 200
 
-
 @app.route('/', methods=['POST'])
+
 def webhook():
-
     # endpoint for processing incoming messaging events
-
     data = request.get_json()
-    log(data)  # you may not want to log every incoming message in production, but it's good for testing
-
-    if data["object"] == "page":
-
-        for entry in data["entry"]:
-            for messaging_event in entry["messaging"]:
-
-                if messaging_event.get("message"):  # someone sent us a message
-
+    log(data)  # you may not want tolog every incoming message in production, but it's good for testing
+    for entry in data["entry"]:
+        for messaging_event in entry["messaging"]:
+            if messaging_event.get("message"):  # someone sent us a message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
+                    send_message(sender_id,message_text)
 
-                    send_message(sender_id, "chao ban {{first_name}}!")
-
-                if messaging_event.get("delivery"):  # delivery confirmation
-                    pass
-
-                if messaging_event.get("optin"):  # optin confirmation
-                    pass
-
-                if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    pass
+            if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
+                sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
+                recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
+                message_text = messaging_event["message"]["text"]  # the message's text
+                if message_text=="Chia se":
+                    share(sender_id," ")
+                elif message_text=="Thong tin san pham": 
+                    list_template(sender_id,"Danh muc san pham")
+                elif message_text=="Do choi van dong":
+                    list_DCVD(sender_id,"")
+                else:
+                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
+                    send_attachment(sender_id)
+                    send_button(sender_id)
+            #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
 
-
+#ham gui tin nhan
 def send_message(recipient_id, message_text):
 
     log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
@@ -68,15 +67,161 @@ def send_message(recipient_id, message_text):
         "recipient": {
             "id": recipient_id
         },
-        "message": {
-            "text": message_text
-        }
+        "message": {"text": message_text}
     })
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
 
+#ham gui hinh anh
+def send_attachment(recipient_id):
+    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=""))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "attachments":[
+              { "type": "image",
+                "payload": {"image_url": "https://i.imgur.com/nt9zvJk.png",
+                        "title:": "IChat",
+                        "subtitle": "Platform giup khach hang tuong tac truc quan voi doanh nghiep.",
+                        "is_reusable":True}
+              }    
+            ] } 
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+
+#ham gui nut
+def send_button(recipient_id):
+    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=""))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message":{
+            "attachment": {
+                "type":"template",
+                "payload":{
+                "template_type":"button",
+                "text":"",
+                "buttons":[
+                {
+                    "type": "postback",
+                    "title":"Chia se",
+                    "payload":"Payload Chia se"
+                },
+                {
+                    "type": "postback",
+                    "title":"Thong tin san pham",
+                    "payload":"Payload Thong tin san pham"
+                },
+                {
+                    "type": "web_url",
+                    "url": "Ve chung toi",
+                    "title": "https://vmarketing.vn",
+                }]
+                } 
+                } }
+
+    })
+
+#ham gui nut tra loi nhanh
+def send_quick_reply(recipient_id, message_text):
+    log("sending quick reply to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data= json.dumps({
+    "recipient": {
+        "id": recipient_id
+    },
+    "messaging_type": "RESPONSE",
+    "message":{
+        "text": message_text,
+        "quick_replies":[
+        {
+            "content_type":"text",
+            "title":"Red",
+            "payload":"send quick reply",
+            "image_url":"http://example.com/img/red.png"
+        },
+        {
+            "content_type":"text",
+            "title":"Green",
+            "payload":"send quick reply",
+            "image_url":"http://example.com/img/green.png"
+        }
+        ]
+    }
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+#ham nut chia se
+def share(recipient_id,message_text):
+    log("sending share to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data= json.dumps({
+    "recipient": {
+        "id": recipient_id
+    },
+    "message": { 
+    "type": "element_share",
+    "share_contents": { 
+    "attachment": {
+        "type": "template",
+        "payload": {
+        "template_type": "generic",
+        "elements": [
+           {
+            "title":"Chia se",
+            "subtitle": "Chia se uu dai ngay",
+            "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS6O9Mb30_y44TLcGH7qbdMyhhzOxsOn-HqWz640VL2HeXdX_J3",
+            "default_action": {
+              "type": "web_url",
+              "url": "https://www.mykingdom.com.vn"
+            },
+            "buttons": [
+            {
+                "type": "web_url",
+                "url": "https://m.me/105274930862928?ref=story.chiasenhanuudai", 
+                "title": "Chia se"
+            } ]
+         } 
+    ]
+      }
+    }
+  }
+    }
+    })
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
@@ -88,7 +233,6 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     except UnicodeEncodeError:
         pass  # squash logging errors in case of non-ascii text
     sys.stdout.flush()
-
 
 if __name__ == '__main__':
     app.run(debug=True)
