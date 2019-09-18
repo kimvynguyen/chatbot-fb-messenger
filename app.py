@@ -65,31 +65,30 @@ def webhook():
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
-    for entry in data["entry"]:
-        for messaging_event in entry["messaging"]:
-            if messaging_event.get("message"):  # someone sent us a message
+    if data["object"] == "page":
+        for entry in data["entry"]:
+            for messaging_event in entry["messaging"]:
+                if messaging_event.get("message"):  # someone sent us a message
+                        sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
+                        recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
+                        message_text = messaging_event["message"]["text"]  # the message's text
+                if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    send_message(sender_id,"chao ban")
-
-            if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
-                recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                message_text = messaging_event["message"]["text"]  # the message's text
-                if message_text=="Mua hang online":
-                    webview(sender_id)
-                if message_text=="Chia se":
-                    share(sender_id)
-                elif message_text=="Thong tin san pham": 
-                    list_template(sender_id,"Danh muc san pham")
-                elif message_text=="Do choi van dong":
-                    list_DCVD(sender_id)
-                else:
-                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
-                    send_attachment(sender_id)
-                    send_button(sender_id)
-            #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
+                    if message_text=="Mua hang online":
+                        webview(sender_id)
+                    if message_text=="Chia se":
+                        share(sender_id)
+                    elif message_text=="Thong tin san pham": 
+                        list_template(sender_id,"Danh muc san pham")
+                    elif message_text=="Do choi van dong":
+                        list_DCVD(sender_id)
+                    else:
+                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
+                        send_attachment(sender_id)
+                        send_button(sender_id)
+                #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
 
