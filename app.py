@@ -25,7 +25,7 @@ def verify():
 def webhook():
 
     # endpoint for processing incoming messaging events
-        params = {
+    params = {
         "access_token": "EAAFvTbGl9ccBAEZBlWiBuLk6wdjWl6VvlLdNG3FTrzOozWKv1GXPRqU8Xv7QzUTlbSUsA5vOwApzUZCF4C0iRXjodzZA7imDw3OvDeJkBzn1ZBA14zeL5yfsoYQk7yqzG9pRd67psnxvCiRPcEneuAxYpawhx0sKvJLp56tiLaMFxcZClzqIeQucpCjxqoqUZD"
     }
     headers = {
@@ -60,7 +60,7 @@ def webhook():
         "whitelisted_domains":["https://www.mykingdom.com.vn"],
         })
 
-    r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
+    r = requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
     
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
