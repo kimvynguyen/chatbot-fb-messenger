@@ -77,10 +77,10 @@ def send_message(recipient_id, message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
-
-#ham gui hinh anh
+        
+#ham gui hinh anh va nut
 def send_attachment(recipient_id):
-    log("sending attachment to {recipient}: {text}".format(recipient=recipient_id, text=""))
+    log("sending attachment to {recipient}".format(recipient=recipient_id))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -93,41 +93,21 @@ def send_attachment(recipient_id):
             "id": recipient_id
         },
         "message": {
-            "attachments":[
-              { "type": "image",
-                "payload": {"image_url": "https://i.imgur.com/nt9zvJk.png",
-                        "title:": "IChat",
-                        "subtitle": "Platform giup khach hang tuong tac truc quan voi doanh nghiep.",
-                        "is_reusable":True}
-              }    
-            ] } 
-    })
-    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
-
-#ham gui nut
-def send_button(recipient_id):
-    log("sending button to {recipient}: {text}".format(recipient=recipient_id, text=""))
-
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "message":{
-            "attachment": {
-                "type":"template",
-                "payload":{
-                "template_type":"button",
-                "text":"",
-                "buttons":[
+            "attachment":{
+        "type":"template",
+        "payload":{
+        "template_type":"generic",
+        "elements":[
+           {
+            "title":"Ichat!",
+            "image_url":"https://i.imgur.com/nt9zvJk.png",
+            "subtitle":"Platform giup khach hang tuong tac truc quan voi doanh nghiep",
+            "default_action": {
+              "type": "postback",
+              "messenger_extensions": false,
+              "webview_height_ratio": "tall",
+            },
+            "buttons":[
                 {
                     "type": "postback",
                     "title":"Mua hang online",
@@ -143,11 +123,17 @@ def send_button(recipient_id):
                     "title":"Thong tin san pham",
                     "payload":"Payload Thong tin san pham"
                 }
-                ]
-                } 
-                } }
-
+                ]   
+          }
+        ]
+      }
+    }
+        }
     })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 #ham gui nut tra loi nhanh
 def send_quick_reply(recipient_id, message_text):
