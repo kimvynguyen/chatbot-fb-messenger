@@ -80,7 +80,7 @@ def send_message(recipient_id, message_text):
 
 #ham gui hinh anh
 def send_attachment(recipient_id):
-    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=""))
+    log("sending attachment to {recipient}: {text}".format(recipient=recipient_id, text=""))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -109,7 +109,7 @@ def send_attachment(recipient_id):
 
 #ham gui nut
 def send_button(recipient_id):
-    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=""))
+    log("sending button to {recipient}: {text}".format(recipient=recipient_id, text=""))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
