@@ -24,6 +24,7 @@ def verify():
 @app.route('/', methods=['POST'])
 
 def webhook():
+    send_message("", "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
     send_attachment("")
     send_button("")
     # endpoint for processing incoming messaging events
@@ -49,10 +50,7 @@ def webhook():
                         list_template(sender_id,"Danh muc san pham")
                     elif message_text == "Do choi van dong":
                         list_DCVD(sender_id)
-                    else:
-                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
-                        send_attachment(sender_id)
-                        send_button(sender_id)
+                  
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
