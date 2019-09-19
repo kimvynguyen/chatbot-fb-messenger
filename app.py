@@ -24,45 +24,7 @@ def verify():
 @app.route('/', methods=['POST'])
 
 def webhook():
-    params = {
-        "access_token": "EAAFvTbGl9ccBAPJaVX4P0I37quy4IRZCcyRzZBkuRer0oxZBwcwTy47OpyIXt56RgLm5Q8dSPRZCvzm3f17t0XHZAYrjf2SnlMEwFzxFEZBVFsip6En4DZA9A9mZBZAlE4C9wLQOxP3dkQV7BVRYbY2WYvOwcOMl4qeiBYlrSdRZC5RRM3aPuyU1ZBFQZA9ugBukHMoZD"
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data =json.dumps({"get_started":{
-            "payload":"GET_STARTED_PAYLOAD"},
-            "greeting":[
-            {
-                "locale":"default",
-                "text":"Xin chao {{user_full_name}}, cam on ban da quan tam den chung toi! Hay nhan Bat dau de tuong tac cung chung toi nhe!"
-            }],
-            "persistent_menu":[
-            {
-            "locale":"default",
-            "composer_input_disabled": True,
-            "call_to_actions":[
-                {
-                    "type": "web_url",
-                    "title": "Power by IChat",
-                    "url": "https://ichat.vmarketing.vn/",
-                    "webview_height_ratio": "full"
-                },
-                {
-                    "type":"postback",
-                    "title":"Chat voi nhan vien",
-                    "payload": "CARE_HELP"
-                }
-            ]
-            }
-        ],
-        "whitelisted_domains":["https://www.mykingdom.com.vn"]
-        })
-    r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
-    
-    send_message("", "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
-    send_attachment("")
-    send_button("")
+   
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
