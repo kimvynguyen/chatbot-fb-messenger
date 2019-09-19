@@ -56,7 +56,7 @@ def webhook():
             ]
             }
         ],
-        "whitelisted_domains":["https://www.mykingdom.com.vn"],
+        "whitelisted_domains":["https://www.mykingdom.com.vn"]
         })
     r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
     
