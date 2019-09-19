@@ -102,8 +102,8 @@ def send_attachment(recipient_id):
             "image_url":"https://i.imgur.com/nt9zvJk.png",
             "subtitle":"Platform giup khach hang tuong tac truc quan voi doanh nghiep",
             "default_action": {
-              "type": "postback",
-              "messenger_extensions": false,
+              "type": "web_url",
+              "messenger_extensions": True,
               "webview_height_ratio": "tall",
             },
             "buttons":[
