@@ -24,6 +24,42 @@ def verify():
 @app.route('/', methods=['POST'])
 
 def webhook():
+    params = {
+        "access_token": "EAAFvTbGl9ccBAGjlkqUqOqok9pNT8znLhgPeNjFHAxSBzZC6P5wie6gjR29u2ZCQ0EVdZBlTR0fIWbhj55aNba0eds2lmScEwGjtORgEZC7R60KeWyufZBBo4wJDB4ljkBZAPvdXanhkhCDrE1IYaZAhJS3YDMdVRAPSxZBDgigm1diM4ddZBHrhQ80GaBHv2b00ZD"
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data =json.dumps({"get_started":{
+            "payload":"GET_STARTED_PAYLOAD"},
+            "greeting":[
+            {
+                "locale":"default",
+                "text":"Xin chao {{user_full_name}}, cam on ban da quan tam den chung toi! Hay nhan Bat dau de tuong tac cung chung toi nhe!"
+            }],
+            "persistent_menu":[
+            {
+            "locale":"default",
+            "composer_input_disabled": True,
+            "call_to_actions":[
+                {
+                    "type": "web_url",
+                    "title": "Power by IChat",
+                    "url": "https://ichat.vmarketing.vn/",
+                    "webview_height_ratio": "full"
+                },
+                {
+                    "type":"postback",
+                    "title":"Chat voi nhan vien",
+                    "payload": "CARE_HELP"
+                }
+            ]
+            }
+        ],
+        "whitelisted_domains":["https://www.mykingdom.com.vn"],
+        })
+    r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
+    
     send_message("", "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
     send_attachment("")
     send_button("")
