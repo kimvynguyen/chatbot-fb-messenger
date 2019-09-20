@@ -54,16 +54,8 @@ def start():
         })
 
     r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
-
-def verify():
-    # when the endpoint is registered as a webhook, it must echo back
-    # the 'hub.challenge' value it receives in the query arguments
-    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-        if not request.args.get("hub.verify_token") == os.environ["VERIFY_TOKEN"]:
-            return "Verification token mismatch", 403
-        return request.args["hub.challenge"], 200
-
-    return "Hello world", 200
+    
+    return "ok", 200
 
 @app.route('/', methods=['POST'])
 
@@ -84,8 +76,7 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    send_attachment(sender_id,"ichat")
-                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
+                   
                     if message_text == "Mua hang online":
                         webview(sender_id,"Mua hang online")
                     elif message_text == "Chia se":
@@ -94,7 +85,9 @@ def webhook():
                         list_template(sender_id,"Danh muc san pham")
                     elif message_text == "Do choi van dong":
                         list_DCVD(sender_id,"Do choi van dong")
-               
+                    else:
+                        send_attachment(sender_id,"ichat")
+                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
