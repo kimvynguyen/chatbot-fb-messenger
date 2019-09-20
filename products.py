@@ -12,7 +12,6 @@ def list_template(recipient_id, message_text):
             "id": recipient_id
         },
     "message":{
-        "text": message_text,
         "attachment": {
         "type": "template",
         "payload": {
