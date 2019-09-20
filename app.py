@@ -80,7 +80,7 @@ def send_message(recipient_id, message_text):
         
 #ham gui hinh anh va nut
 def send_attachment(recipient_id,message_text):
-    log("sending attachment to {recipient}: {text}".format(recipient=recipient_id, text=message_text)))
+    log("sending attachment to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
