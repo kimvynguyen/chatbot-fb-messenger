@@ -25,7 +25,7 @@ def list_template(recipient_id, message_text):
                 {
                     "type": "postback",
                     "title": "Xem danh sach",
-                    "payload": "Payload DCVD",       
+                    "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi van dong\"}"
                 },
                 ],
             }],
