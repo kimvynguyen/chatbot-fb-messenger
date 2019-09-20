@@ -23,11 +23,11 @@ def list_template(recipient_id, message_text):
                 "image_url": "https://www.mykingdom.com.vn/media/catalog/product/cache/73a368d029059537f29915590ba445d6/magento/ROYAL_BABY/RB16B-6___RED/RB16B-6___RED_1.jpg",          
                 "buttons": [
                 {
-                    "title": "Xem danh sach",
                     "type": "postback",
-                    "payload": "Payload DCVD"       
-                }
-                ]
+                    "title": "Xem danh sach",
+                    "payload": "Payload DCVD",       
+                },
+                ],
             },
             {
                 "title": "Do choi tri tue",
@@ -35,11 +35,11 @@ def list_template(recipient_id, message_text):
                 "image_url": "https://www.mykingdom.com.vn/media/catalog/product/cache/73a368d029059537f29915590ba445d6/magento/MAISTO/MT39194/MT39194_1.jpg",
                 "buttons": [
                 {
-                    "title": "Xem danh sach",
                     "type": "postback",
-                    "payload": "Payload DCTT"   
-                }
-                ]
+                    "title": "Xem danh sach",
+                    "payload": "Payload DCTT",   
+                },
+                ],
             },
             {
                 "title": "Phuong tien giao thong",
@@ -47,20 +47,13 @@ def list_template(recipient_id, message_text):
                 "image_url": "https://www.mykingdom.com.vn/media/catalog/product/cache/73a368d029059537f29915590ba445d6/magento/SKY_ROVER/YW859110-6/YW859110-6_1.jpg",
                 "buttons": [
                 {
-                    "title": "Xem danh sach",
                     "type": "postback",
-                    "payload": "Payload PTGT"             
-                }
-                ]        
+                    "title": "Xem danh sach",
+                    "payload": "Payload PTGT",             
+                },
+                ],        
             }
-            ],
-            "buttons": [
-            {
-                "title": "Danh muc san pham",
-                "type": "postback",
-                "payload": "Payload Thong tin san pham"            
-            }
-            ]  
+            ]
         }
         }
     }
