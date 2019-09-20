@@ -30,8 +30,12 @@ def webhook():
     headers = {
         "Content-Type": "application/json"
     }
-    data =json.dumps({"get_started":{
-            "payload":"GET_STARTED_PAYLOAD"},
+    data =json.dumps({
+         "get_started":[
+                {
+                "payload":"GET_STARTED_PAYLOAD"
+                }
+            ],
             "greeting":[
             {
                 "locale":"default",
