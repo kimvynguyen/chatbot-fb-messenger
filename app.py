@@ -10,18 +10,21 @@ import view
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
 def start():
     params = {
-        "access_token": "EAAFvTbGl9ccBAMu6fvHRktSf2x8F1blQurZApgpLPZAzou2zjjQGszOao81pAfkqgMlJUKxt7K7OFSdj5gDdZAS59hjXKpyM7egY0NZArNnToM1FZCUHNVpjGxmuHzR4ZAZBpCckXWRq6HMxfRxzOStGdesEOw06Yl4hrKjyH4Kvv3Ip9DDeVglMAkBZBUgZCFC0ZD"
+        "access_token": "EAAFvTbGl9ccBAGjlkqUqOqok9pNT8znLhgPeNjFHAxSBzZC6P5wie6gjR29u2ZCQ0EVdZBlTR0fIWbhj55aNba0eds2lmScEwGjtORgEZC7R60KeWyufZBBo4wJDB4ljkBZAPvdXanhkhCDrE1IYaZAhJS3YDMdVRAPSxZBDgigm1diM4ddZBHrhQ80GaBHv2b00ZD"
     }
     headers = {
         "Content-Type": "application/json"
     }
-    data = json.dumps ({
-            "get_started":
+    data =json.dumps(
+        {
+            "get_started":[
                 {
                 "payload":"GET_STARTED_PAYLOAD"
-                },
+                }
+            ],
             "greeting":[
             {
                 "locale":"default",
@@ -52,10 +55,7 @@ def start():
 
     r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
 
-
-@app.route('/', methods=['GET'])
 def verify():
-    start()
     # when the endpoint is registered as a webhook, it must echo back
     # the 'hub.challenge' value it receives in the query arguments
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
@@ -68,6 +68,7 @@ def verify():
 @app.route('/', methods=['POST'])
 
 def webhook():
+    
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
