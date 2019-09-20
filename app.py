@@ -35,20 +35,21 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"] # the message's text
-                        
+                    send_attachment(sender_id,"ichat")
+                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    message_text = messaging_event["message"]["text"]  # the message's text
-                    send_attachment(sender_id,"ichat")
-                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
-                    if message_text == "Mua hang online":
+                    if messaging_event['postback']['payload'] == "Get Started":
+                        send_attachment(sender_id,"ichat")
+                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
+                    elif messaging_event['postback']['payload'] == "Payload Mua hang online":
                         webview(sender_id,"Mua hang online")
-                    elif message_text == "Chia se":
+                    elif messaging_event['postback']['payload'] == "Payload Chia se":
                         share(sender_id,"Chia se")
-                    elif message_text == "Thong tin san pham": 
+                    elif messaging_event['postback']['payload'] == "Payload Thong tin san pham":
                         list_template(sender_id,"Danh muc san pham")
-                    elif message_text == "Do choi van dong":
+                    elif messaging_event['postback']['payload'] == "Payload DCVD":
                         list_DCVD(sender_id,"Do choi van dong")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
