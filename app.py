@@ -42,14 +42,14 @@ def webhook():
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                         send_attachment(sender_id,"ichat")
-                    elif messaging_event['postback']['payload'] == "Payload Mua hang online":
+                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}":
                         webview(sender_id,"Mua hang online")
-                    elif messaging_event['postback']['payload'] == "Payload Chia se":
+                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Chia se\"}":
                         share(sender_id,"Chia se")
-                    elif messaging_event['postback']['payload'] == "Payload Thong tin san pham":
+                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Danh muc san pham\"}":
                         send_message(sender_id, "Chao ban")
                         list_template(sender_id,"Danh muc san pham")
-                    elif messaging_event['postback']['payload'] == "Payload DCVD":
+                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi van dong\"}":
                         list_DCVD(sender_id,"Do choi van dong")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
@@ -110,18 +110,18 @@ def send_attachment(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "postback",
-                    "title":"Mua hang online",
-                    "payload":"Payload Mua hang online"
+                    "title": "Mua hang online",
+                    "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}"
                 },
                 {
                     "type": "postback",
-                    "title":"Chia se",
-                    "payload":"Payload Chia se"
+                    "title": "Chia se",
+                    "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Chia se\"}"
                 },
                 {
                     "type": "postback",
                     "title":"Thong tin san pham",
-                    "payload":"Payload Thong tin san pham"
+                    "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Danh muc san pham\"}"
                 }
                 ]   
           }
