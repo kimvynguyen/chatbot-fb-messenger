@@ -12,18 +12,16 @@ app = Flask(__name__)
 
 def start():
     params = {
-        "access_token": "EAAFvTbGl9ccBAGjlkqUqOqok9pNT8znLhgPeNjFHAxSBzZC6P5wie6gjR29u2ZCQ0EVdZBlTR0fIWbhj55aNba0eds2lmScEwGjtORgEZC7R60KeWyufZBBo4wJDB4ljkBZAPvdXanhkhCDrE1IYaZAhJS3YDMdVRAPSxZBDgigm1diM4ddZBHrhQ80GaBHv2b00ZD"
+        "access_token": "EAAFvTbGl9ccBAMu6fvHRktSf2x8F1blQurZApgpLPZAzou2zjjQGszOao81pAfkqgMlJUKxt7K7OFSdj5gDdZAS59hjXKpyM7egY0NZArNnToM1FZCUHNVpjGxmuHzR4ZAZBpCckXWRq6HMxfRxzOStGdesEOw06Yl4hrKjyH4Kvv3Ip9DDeVglMAkBZBUgZCFC0ZD"
     }
     headers = {
         "Content-Type": "application/json"
     }
-    data =json.dumps(
-        {
-            "get_started":[
+    data = json.dumps ({
+            "get_started":
                 {
                 "payload":"GET_STARTED_PAYLOAD"
-                }
-            ],
+                },
             "greeting":[
             {
                 "locale":"default",
@@ -85,6 +83,8 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
+                    send_attachment(sender_id,"ichat")
+                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                     if message_text == "Mua hang online":
                         webview(sender_id,"Mua hang online")
                     elif message_text == "Chia se":
@@ -93,10 +93,7 @@ def webhook():
                         list_template(sender_id,"Danh muc san pham")
                     elif message_text == "Do choi van dong":
                         list_DCVD(sender_id,"Do choi van dong")
-                    else: 
-                        send_attachment(sender_id,"ichat")
-                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
-                  
+               
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
