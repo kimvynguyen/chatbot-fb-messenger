@@ -59,6 +59,8 @@ def webhook():
         "whitelisted_domains":["https://www.mykingdom.com.vn",
                                 "https://vmarketing.vn"],
         })
+    
+    r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
