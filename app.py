@@ -24,8 +24,7 @@ def verify():
 @app.route('/', methods=['POST'])
 
 def webhook():
-    send_attachment(sender_id,"ichat")
-    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
+   
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
@@ -41,7 +40,8 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                   
+                    send_attachment(sender_id,"ichat")
+                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                     if message_text == "Mua hang online":
                         webview(sender_id,"Mua hang online")
                     elif message_text == "Chia se":
@@ -212,6 +212,10 @@ def share(recipient_id,message_text):
   }
     }
     })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
