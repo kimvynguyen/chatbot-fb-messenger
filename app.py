@@ -24,6 +24,41 @@ def verify():
 @app.route('/', methods=['POST'])
 
 def webhook():
+    params = {
+        "access_token": "EAAFvTbGl9ccBAGjlkqUqOqok9pNT8znLhgPeNjFHAxSBzZC6P5wie6gjR29u2ZCQ0EVdZBlTR0fIWbhj55aNba0eds2lmScEwGjtORgEZC7R60KeWyufZBBo4wJDB4ljkBZAPvdXanhkhCDrE1IYaZAhJS3YDMdVRAPSxZBDgigm1diM4ddZBHrhQ80GaBHv2b00ZD"
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data =json.dumps({"get_started":{
+            "payload":"GET_STARTED_PAYLOAD"},
+            "greeting":[
+            {
+                "locale":"default",
+                "text":"Xin chao {{user_full_name}}, cam on ban da quan tam den chung toi! Hay nhan Bat dau de tuong tac cung chung toi nhe!"
+            }],
+            "persistent_menu":[
+            {
+            "locale":"default",
+            "composer_input_disabled": True,
+            "call_to_actions":[
+                {
+                    "type": "web_url",
+                    "title": "Power by IChat",
+                    "url": "https://ichat.vmarketing.vn/",
+                    "webview_height_ratio": "full"
+                },
+                {
+                    "type":"postback",
+                    "title":"Chat voi nhan vien",
+                    "payload": "CARE_HELP"
+                }
+            ]
+            }
+        ],
+        "whitelisted_domains":["https://www.mykingdom.com.vn",
+                                "https://vmarketing.vn"],
+        })
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
@@ -34,7 +69,7 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"] # the message's text
-                    send_attachment(sender_id)
+                    send_attachment(sender_id,"ichat")
                     
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
@@ -77,8 +112,8 @@ def send_message(recipient_id, message_text):
         log(r.text)
         
 #ham gui hinh anh va nut
-def send_attachment(recipient_id):
-    log("sending attachment to {recipient}".format(recipient=recipient_id))
+def send_attachment(recipient_id,message_text):
+    log("sending attachment to {recipient}: {text}".format(recipient=recipient_id, text=message_text)))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
