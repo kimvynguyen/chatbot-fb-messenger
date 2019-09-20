@@ -47,6 +47,7 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "Payload Chia se":
                         share(sender_id,"Chia se")
                     elif messaging_event['postback']['payload'] == "Payload Thong tin san pham":
+                        send_message(sender_id, "Chao ban")
                         list_template(sender_id,"Danh muc san pham")
                     elif messaging_event['postback']['payload'] == "Payload DCVD":
                         list_DCVD(sender_id,"Do choi van dong")
