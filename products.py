@@ -15,9 +15,9 @@ def list_template(recipient_id, message_text):
         "attachment": {
         "type": "template",
         "payload": {
-            "template_type": "list",
+            "template_type": "generic",
             "elements": [
-            {
+            [{
                 "title": "Do choi van dong",
                 "subtitle": "Xem danh sach do choi van dong",
                 "image_url": "https://www.mykingdom.com.vn/media/catalog/product/cache/73a368d029059537f29915590ba445d6/magento/ROYAL_BABY/RB16B-6___RED/RB16B-6___RED_1.jpg",          
@@ -28,8 +28,8 @@ def list_template(recipient_id, message_text):
                     "payload": "Payload DCVD",       
                 },
                 ],
-            },
-            {
+            }],
+            [{
                 "title": "Do choi tri tue",
                 "subtitle": "Xem danh sach do choi tri tue",
                 "image_url": "https://www.mykingdom.com.vn/media/catalog/product/cache/73a368d029059537f29915590ba445d6/magento/MAISTO/MT39194/MT39194_1.jpg",
@@ -40,8 +40,8 @@ def list_template(recipient_id, message_text):
                     "payload": "Payload DCTT",   
                 },
                 ],
-            },
-            {
+            }],
+            [{
                 "title": "Phuong tien giao thong",
                 "subtitle": "Xem danh sach phuong tien giao thong",
                 "image_url": "https://www.mykingdom.com.vn/media/catalog/product/cache/73a368d029059537f29915590ba445d6/magento/SKY_ROVER/YW859110-6/YW859110-6_1.jpg",
@@ -52,7 +52,7 @@ def list_template(recipient_id, message_text):
                     "payload": "Payload PTGT",             
                 },
                 ],        
-            }
+            }]
             ]
         }
         }
@@ -100,7 +100,7 @@ def list_DCVD(recipient_id):
 
     }
     })
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
