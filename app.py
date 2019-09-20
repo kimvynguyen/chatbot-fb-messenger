@@ -40,7 +40,7 @@ def webhook():
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    if messaging_event['postback']['payload'] == "Get Started":
+                    if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_attachment(sender_id,"ichat")
                         send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                     elif messaging_event['postback']['payload'] == "Payload Mua hang online":
