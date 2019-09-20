@@ -25,7 +25,8 @@ def list_template(recipient_id, message_text):
                 "buttons": [
                 {
                     "title": "Xem danh sach",
-                    "type": "template"       
+                    "type": "postback",
+                    "payload": "Payload DCVD"       
                 }
                 ]
             },
@@ -36,7 +37,8 @@ def list_template(recipient_id, message_text):
                 "buttons": [
                 {
                     "title": "Xem danh sach",
-                    "type": "template"    
+                    "type": "postback",
+                    "payload": "Payload DCTT"   
                 }
                 ]
             },
@@ -47,7 +49,8 @@ def list_template(recipient_id, message_text):
                 "buttons": [
                 {
                     "title": "Xem danh sach",
-                    "type": "template"            
+                    "type": "postback",
+                    "payload": "Payload PTGT"             
                 }
                 ]        
             }
@@ -56,7 +59,7 @@ def list_template(recipient_id, message_text):
             {
                 "title": "Danh muc san pham",
                 "type": "postback",
-                "payload": "Payload Danh muc san pham"            
+                "payload": "Payload Thong tin san pham"            
             }
             ]  
         }
