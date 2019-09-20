@@ -10,28 +10,16 @@ import view
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def verify():
-    # when the endpoint is registered as a webhook, it must echo back
-    # the 'hub.challenge' value it receives in the query arguments
-    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-        if not request.args.get("hub.verify_token") == os.environ["VERIFY_TOKEN"]:
-            return "Verification token mismatch", 403
-        return request.args["hub.challenge"], 200
-
-    return "Hello world", 200
-
-@app.route('/', methods=['POST'])
-
-def webhook():
+def start():
     params = {
         "access_token": "EAAFvTbGl9ccBAGjlkqUqOqok9pNT8znLhgPeNjFHAxSBzZC6P5wie6gjR29u2ZCQ0EVdZBlTR0fIWbhj55aNba0eds2lmScEwGjtORgEZC7R60KeWyufZBBo4wJDB4ljkBZAPvdXanhkhCDrE1IYaZAhJS3YDMdVRAPSxZBDgigm1diM4ddZBHrhQ80GaBHv2b00ZD"
     }
     headers = {
         "Content-Type": "application/json"
     }
-    data =json.dumps({
-         "get_started":[
+    data =json.dumps(
+        {
+            "get_started":[
                 {
                 "payload":"GET_STARTED_PAYLOAD"
                 }
@@ -65,6 +53,23 @@ def webhook():
         })
 
     r=requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",params=params, headers=headers, data=data)
+
+
+@app.route('/', methods=['GET'])
+def verify():
+    start()
+    # when the endpoint is registered as a webhook, it must echo back
+    # the 'hub.challenge' value it receives in the query arguments
+    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
+        if not request.args.get("hub.verify_token") == os.environ["VERIFY_TOKEN"]:
+            return "Verification token mismatch", 403
+        return request.args["hub.challenge"], 200
+
+    return "Hello world", 200
+
+@app.route('/', methods=['POST'])
+
+def webhook():
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want tolog every incoming message in production, but it's good for testing
@@ -75,9 +80,6 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"] # the message's text
-                    send_attachment(sender_id,"ichat")
-                    send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
-                    
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
@@ -85,12 +87,15 @@ def webhook():
                     message_text = messaging_event["message"]["text"]  # the message's text
                     if message_text == "Mua hang online":
                         webview(sender_id,"Mua hang online")
-                    if message_text == "Chia se":
+                    elif message_text == "Chia se":
                         share(sender_id,"Chia se")
                     elif message_text == "Thong tin san pham": 
                         list_template(sender_id,"Danh muc san pham")
                     elif message_text == "Do choi van dong":
                         list_DCVD(sender_id,"Do choi van dong")
+                    else: 
+                        send_attachment(sender_id,"ichat")
+                        send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                   
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
