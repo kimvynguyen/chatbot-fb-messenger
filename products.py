@@ -15,7 +15,7 @@ def list_template(recipient_id, message_text):
         "attachment": {
         "type": "template",
         "payload": {
-            "template_type": "generic",
+            "template_type": "list",
             "elements": [
             {
                 "title": "Do choi van dong",
