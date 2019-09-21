@@ -47,7 +47,6 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Chia se\"}":
                         share(sender_id,"Chia se")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Danh muc san pham\"}":
-                        send_attachment(sender_id,"ichat")
                         list_template(sender_id,"Danh muc san pham")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi van dong\"}":
                         list_DCVD(sender_id,"Do choi van dong")
@@ -217,7 +216,46 @@ def share(recipient_id,message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
-
+        
+def list_template(recipient_id, message_text):
+    log("sending list template to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data= json.dumps({
+    "recipient": {
+            "id": recipient_id
+        },
+    "message": {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements":[
+           {
+            "title":"Do choi van dong",
+            "image_url":"https://imgur.com/15NSVJ2.png",
+            "subtitle":"Xem danh sach",
+            "buttons":[
+                {
+                    "title": "Xem danh sach",
+                    "type": "postback",
+                    "payload":"Do choi van dong"
+                    
+                }]
+           }]
+      } 
+    } 
+    }       
+        })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+        
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
         if type(msg) is dict:
