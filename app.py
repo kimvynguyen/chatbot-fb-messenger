@@ -295,8 +295,7 @@ def list_DCVD(recipient_id, message_text):
     "attachment": {
       "type": "template",
       "payload": {
-        "template_type": "list",
-         "top_element_style": "compact",
+        "template_type": "generic",
         "elements":[
            {
                     "title": "Xe may xuc",
