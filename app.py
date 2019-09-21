@@ -49,7 +49,7 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi van dong\"}":
                         list_DCVD(sender_id,"Do choi van dong")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}":
-                        send_message(sender_id, "Cam on ban da dat mua san pham của chung toi. Nhan vien cua chung toi se som lien he lai voi ban!")
+                        send_message(sender_id, "Cam on ban da dat mua san pham cua chung toi.\nNhan vien cua chung toi se som lien he lai voi ban!")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
