@@ -282,7 +282,7 @@ def list_template(recipient_id, message_text):
         log(r.text)
         
 def list_DCVD(recipient_id,message_text):
-    log("sending list template to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    log("sending list DCVD to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
@@ -297,7 +297,8 @@ def list_DCVD(recipient_id,message_text):
         "attachments":{
             "type": "template",
             "payload": {
-            "template_type": "generic",
+            "template_type": "list",
+            "top_element_style": "compact",
             "elements": [
                 {
                     "title": "Xe may xuc",
@@ -309,7 +310,7 @@ def list_DCVD(recipient_id,message_text):
                             "type": "postback",
                             "payload": "Mua ngay"
                         }
-                    ],
+                    ]
                 },
                 {
                     "title": "Xe can cau",
@@ -321,7 +322,7 @@ def list_DCVD(recipient_id,message_text):
                             "type": "postback",
                             "payload": "Mua ngay"
                         }
-                    ],
+                    ]
                 },
                 {
                     "title": "Xe ben",
@@ -333,7 +334,7 @@ def list_DCVD(recipient_id,message_text):
                             "type": "postback",
                             "payload": "Mua ngay"
                         }
-                    ],
+                    ]
                 }
             ]
              
