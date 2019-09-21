@@ -243,10 +243,23 @@ def list_template(recipient_id, message_text):
                 {
                     "title": "Xem danh sach",
                     "type": "postback",
-                    "payload":"Do choi van dong"
+                    "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi van dong\"}"
                     
                 }]
-           }]
+           },
+           {
+            "title":"Phuong tien giao thong",
+            "image_url":"https://imgur.com/RN6BXcP.png",
+            "subtitle":"Da dang, phong phu cac loai phuong tien giao thong",
+            "buttons":[
+            {
+                "title": "Xem danh sach",
+                "type": "postback",
+                "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Phuong tien giao thong\"}"
+
+            }]
+           }
+        ]
       } 
     } 
     }       
