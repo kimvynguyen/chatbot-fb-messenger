@@ -295,6 +295,7 @@ def list_DCVD(recipient_id):
         },
     "message":{
         "attachments":{
+            "type": "template",
             "payload": {
             "template_type": "list",
             "top_element_style": "compact",
