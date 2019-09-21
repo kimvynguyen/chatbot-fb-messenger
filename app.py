@@ -248,6 +248,18 @@ def list_template(recipient_id, message_text):
                 }]
            },
            {
+            "title":"Do choi tri tue",
+            "image_url":"https://imgur.com/lFBpXic.png",
+            "subtitle":"Da dang, phong phu cac loai do choi tri tue",
+            "buttons":[
+                {
+                    "title": "Xem danh sach",
+                    "type": "postback",
+                    "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi tri tue\"}"
+
+                }]
+           },
+           {
             "title":"Phuong tien giao thong",
             "image_url":"https://imgur.com/RN6BXcP.png",
             "subtitle":"Da dang, phong phu cac loai phuong tien giao thong",
@@ -264,6 +276,72 @@ def list_template(recipient_id, message_text):
     } 
     }       
         })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+        
+def list_DCVD(recipient_id):
+    log("sending list template to {recipient}: {text}".format(recipient=recipient_id, text=""))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data= json.dumps({
+    "recipient": {
+            "id": recipient_id
+        },
+    "message":{
+        "attachments":{
+            "payload": {
+            "template_type": "list",
+            "top_element_style": "compact",
+            "elements": [
+                {
+                    "title": "Xe may xuc",
+                    "subtitle": "399,000 VND",
+                    "image_url": "https://imgur.com/TJuA5Zj.png",          
+                    "buttons": [
+                        {
+                            "title": "Mua ngay",
+                            "type": "postback",
+                            "payload": "Mua ngay"
+                        }
+                    ],
+                },
+                {
+                    "title": "Xe can cau",
+                    "subtitle": "399,000 VND",
+                    "image_url": "https://imgur.com/5ibsmK0.png",          
+                    "buttons": [
+                        {
+                            "title": "Mua ngay",
+                            "type": "postback",
+                            "payload": "Mua ngay"
+                        }
+                    ],
+                },
+                {
+                    "title": "Xe ben",
+                    "subtitle": "399,000 VND",
+                    "image_url": "https://imgur.com/Bnci9NZ.png",          
+                    "buttons": [
+                        {
+                            "title": "Mua ngay",
+                            "type": "postback",
+                            "payload": "Mua ngay"
+                        }
+                    ],
+                }
+            ]
+             
+            }
+        }
+
+    }
+    })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
