@@ -15,65 +15,29 @@ def list_template(recipient_id, message_text):
     "attachment": {
       "type": "template",
       "payload": {
-        "template_type": "list",
-        "top_element_style": "compact",
-        "elements": [
-          {
-            "title": "Do choi van dong",
-            "subtitle": "Xem danh sach do choi van dong",
-            "image_url": "https://imgur.com/kzo7OF5.png",          
-            "buttons": [
-              {
-                "title": "Xem danh sach",
-                "type": "web_url",
-                "url": "https://www.mykingdom.com.vn/danh-muc/do-choi-van-dong.html",
-                "messenger_extensions": False,
-                "webview_height_ratio": "tall",
-                         
-              }
-            ],
+        "template_type": "generic",
+        "elements":[
+           {
+            "title":"Ichat!",
+            "image_url":"https://i.imgur.com/nt9zvJk.png",
+            "subtitle":"Platform giup khach hang tuong tac truc quan voi doanh nghiep",
             "default_action": {
               "type": "web_url",
-              "url": "https://www.mykingdom.com.vn/danh-muc/do-choi-van-dong.html",
-              "messenger_extensions": False,
+              "url": "https://www.mykingdom.com.vn",
+              "messenger_extensions": True,
               "webview_height_ratio": "tall",
-              
-            }      
-          },
-         
-          {
-            "title": "Phuong tien giao thong",
-            "image_url": "https://imgur.com/RN6BXcP.png",
-            "subtitle": "Xem danh sach phuong tien giao thong",
-            "buttons": [
-              {
-                "title": "Xem danh sach",
-                "type": "web_url",
-                "url": "https://www.mykingdom.com.vn/danh-muc/phuong-tien-giao-thong.html",
-                "messenger_extensions": False,
-                "webview_height_ratio": "tall",
-                  
-              }
-            ],
-            "default_action": {
-              "type": "web_url",
-              "url": "https://www.mykingdom.com.vn/danh-muc/phuong-tien-giao-thong.html",
-              "messenger_extensions": False,
-              "webview_height_ratio": "tall",
-              
-            }      
-          }
-        ],
-         "buttons": [
-          {
-            "title": "Danh muc san pham",
-            "type": "postback",
-            "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Danh muc san pham\"}"            
-          }
-        ]  
-      }
-        }
-    }
+            },
+            "buttons":[
+                {
+                    "title": "Xem danh sach",
+                    "type": "postback",
+                    "payload":"Do choi van dong"
+                    
+                }]
+           }]
+      } 
+    } 
+    }       
         })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
@@ -117,7 +81,7 @@ def list_DCVD(recipient_id):
 
     }
     })
-    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
