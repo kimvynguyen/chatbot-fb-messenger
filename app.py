@@ -50,6 +50,7 @@ def webhook():
                         list_DCVD(sender_id,"Do choi van dong")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}":
                         send_message(sender_id, "Cam on ban da dat mua san pham cua chung toi.\nNhan vien cua chung toi se som lien he lai voi ban!")
+                        send_quick_reply(sender_id,"Ban co hai long ve dich vu cua chung toi khong?")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
@@ -108,9 +109,9 @@ def send_attachment(recipient_id,message_text):
             },
             "buttons":[
                 {
-                    "type": "postback",
-                    "title": "Mua hang online",
-                    "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}"
+                    "type": "web_url",
+                    "title":"Ve chung toi",
+                    "url":"https://www.mykingdom.com.vn"
                 },
                 {
                     "type": "postback",
@@ -153,15 +154,16 @@ def send_quick_reply(recipient_id, message_text):
         "quick_replies":[
         {
             "content_type":"text",
-            "title":"Red",
+            "title":"Hai long",
             "payload":"send quick reply",
-            "image_url":"http://example.com/img/red.png"
+            "image_url":"https://imgur.com/yhp5ZcG.png"
+            
         },
         {
             "content_type":"text",
-            "title":"Green",
+            "title":"Khong hai long",
             "payload":"send quick reply",
-            "image_url":"http://example.com/img/green.png"
+            "image_url":"https://imgur.com/z08q0Gy.png"
         }
         ]
     }
