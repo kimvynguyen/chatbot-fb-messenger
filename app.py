@@ -33,7 +33,8 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"] # the message's text
-                    
+                    if message_text== "Hai long" or  message_text== "Khong hai long":
+                        send_message(sender_id, "Cam on ban da gop y cho dich vu cua chung toi.")
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
@@ -51,8 +52,6 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}":
                         send_message(sender_id, "Cam on ban da dat mua san pham cua chung toi.\nNhan vien cua chung toi se som lien he lai voi ban!")
                         send_quick_reply(sender_id,"Ban co hai long ve dich vu cua chung toi khong?")
-                    elif messaging_event['postback']['payload'] == "send quick reply":
-                        send_message(sender_id, "Cam on ban da gop y cho dich vu cua chung toi.")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
