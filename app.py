@@ -47,6 +47,7 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Chia se\"}":
                         share(sender_id,"Chia se")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Danh muc san pham\"}":
+                        send_attachment(sender_id,"ichat")
                         list_template(sender_id,"Danh muc san pham")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Do choi van dong\"}":
                         list_DCVD(sender_id,"Do choi van dong")
