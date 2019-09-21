@@ -298,8 +298,7 @@ def list_DCVD(recipient_id,message_text):
         "attachments":{
             "type": "template",
             "payload": {
-            "template_type": "list",
-            "top_element_style": "compact",
+            "template_type": "generic",
             "elements": [
                 {
                     "title": "Xe may xuc",
@@ -341,7 +340,6 @@ def list_DCVD(recipient_id,message_text):
              
             }
         }
-
     }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
