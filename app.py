@@ -38,7 +38,6 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
-                        list_DCVD(sender_id,"Do choi van dong")
                         send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                         send_attachment(sender_id,"ichat")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}":
@@ -280,8 +279,8 @@ def list_template(recipient_id, message_text):
         log(r.status_code)
         log(r.text)
         
-def list_DCVD(recipient_id,message_text):
-    log("sending list DCVD to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+def list_DCVD(recipient_id, message_text):
+    log("sending list template DCVD to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
@@ -292,13 +291,13 @@ def list_DCVD(recipient_id,message_text):
     "recipient": {
             "id": recipient_id
         },
-    "message":{
-        "attachments":{
-            "type": "template",
-            "payload": {
-            "template_type": "generic",
-            "elements": [
-                {
+    "message": {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements":[
+           {
                     "title": "Xe may xuc",
                     "subtitle": "399.000 VND",
                     "image_url": "https://imgur.com/TJuA5Zj.png",          
@@ -310,7 +309,7 @@ def list_DCVD(recipient_id,message_text):
                         }
                     ]
                 },
-                {
+            {
                     "title": "Xe can cau",
                     "subtitle": "399.000 VND",
                     "image_url": "https://imgur.com/5ibsmK0.png",          
@@ -334,16 +333,18 @@ def list_DCVD(recipient_id,message_text):
                         }
                     ]
                 }
-            ]
-             
-            }
-        }
-    }
-    })
+           
+           ]
+
+      } 
+    } 
+    }       
+        })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
+
         
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
