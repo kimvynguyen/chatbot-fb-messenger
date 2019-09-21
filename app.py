@@ -298,41 +298,42 @@ def list_DCVD(recipient_id,message_text):
         "attachments":{
             "type": "template",
             "payload": {
-            "template_type": "generic",
+            "template_type": "list",
+            "top_element_style": "compact",
             "elements": [
                 {
                     "title": "Xe may xuc",
-                    "subtitle": "399,000 VND",
+                    "subtitle": "399.000 VND",
                     "image_url": "https://imgur.com/TJuA5Zj.png",          
                     "buttons": [
                         {
                             "title": "Mua ngay",
                             "type": "postback",
-                            "payload": "Mua ngay"
+                            "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}"
                         }
                     ]
                 },
                 {
                     "title": "Xe can cau",
-                    "subtitle": "399,000 VND",
+                    "subtitle": "399.000 VND",
                     "image_url": "https://imgur.com/5ibsmK0.png",          
                     "buttons": [
                         {
                             "title": "Mua ngay",
                             "type": "postback",
-                            "payload": "Mua ngay"
+                            "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}"
                         }
                     ]
                 },
                 {
                     "title": "Xe ben",
-                    "subtitle": "399,000 VND",
+                    "subtitle": "399.000 VND",
                     "image_url": "https://imgur.com/Bnci9NZ.png",          
                     "buttons": [
                         {
                             "title": "Mua ngay",
                             "type": "postback",
-                            "payload": "Mua ngay"
+                            "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}"
                         }
                     ]
                 }
