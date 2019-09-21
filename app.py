@@ -5,8 +5,6 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
-import products
-import view
 
 app = Flask(__name__)
 
