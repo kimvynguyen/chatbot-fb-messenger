@@ -31,20 +31,20 @@ def list_template(recipient_id, message_text):
                 "webview_height_ratio": "tall",
                          
               }
-            ]
+            ],
+            "default_action": {
+              "type": "web_url",
+              "url": "https://www.mykingdom.com.vn/danh-muc/do-choi-van-dong.html",
+              "messenger_extensions": False,
+              "webview_height_ratio": "tall",
+              
+            }      
           },
          
           {
             "title": "Phuong tien giao thong",
             "image_url": "https://imgur.com/RN6BXcP.png",
             "subtitle": "Xem danh sach phuong tien giao thong",
-            "default_action": {
-              "type": "web_url",
-              "url": "https://www.mykingdom.com.vn/danh-muc/phuong-tien-giao-thong.html",
-              "messenger_extensions": False,
-              "webview_height_ratio": "tall",
-              
-            },
             "buttons": [
               {
                 "title": "Xem danh sach",
@@ -54,7 +54,14 @@ def list_template(recipient_id, message_text):
                 "webview_height_ratio": "tall",
                   
               }
-            ]        
+            ],
+            "default_action": {
+              "type": "web_url",
+              "url": "https://www.mykingdom.com.vn/danh-muc/phuong-tien-giao-thong.html",
+              "messenger_extensions": False,
+              "webview_height_ratio": "tall",
+              
+            }      
           }
         ],
          "buttons": [
@@ -110,7 +117,7 @@ def list_DCVD(recipient_id):
 
     }
     })
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
