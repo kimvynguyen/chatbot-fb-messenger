@@ -114,6 +114,8 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}":
                         send_message(sender_id, "Cam on ban da dat mua san pham cua chung toi.\nNhan vien cua chung toi se som lien he lai voi ban!")
                         send_quick_reply(sender_id,"Ban co hai long ve dich vu cua chung toi khong?")
+                    elif messaging_event['postback']['payload'] == "Payload Mua hang online":
+                        send_order(sender_id,"Mua hang online")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
@@ -172,9 +174,9 @@ def send_attachment(recipient_id,message_text):
             },
             "buttons":[
                 {
-                    "type": "web_url",
+                    "type": "postback",
                     "title":"Mua hang online",
-                    "url": "https://bot-static.m-co.me/order"
+                    "url": "Payload Mua hang online"
                 },
                 {
                     "type": "postback",
@@ -198,6 +200,46 @@ def send_attachment(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
+def send_order(recipient_id,message_text):
+    log("sending order  to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "attachment":{
+        "type":"template",
+        "payload":{
+        "template_type":"generic",
+        "elements":[
+           {
+            "title":"Do choi van dong",
+            "image_url":"https://imgur.com/15NSVJ2.png",
+            "subtitle":"Xem danh sach",
+            "default_action": {
+              "type": "web_url",
+              "url": "https://bot-static.m-co.me/order",
+              "messenger_extensions": True,
+              "webview_height_ratio": "tall",
+            },
+            "buttons":[]   
+          }
+        ]
+      }
+    }
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 #ham gui nut tra loi nhanh
 def send_quick_reply(recipient_id, message_text):
     log("sending quick reply to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
