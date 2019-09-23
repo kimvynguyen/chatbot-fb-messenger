@@ -230,9 +230,11 @@ def send_order(recipient_id,message_text):
               "webview_height_ratio": "tall",
             },
             "buttons":[
+               {
                 "title": "Mua ngay",
                 "type": "postback",
                 "payload": "Mua ngay"
+               }
           ]   
           }
         ]
