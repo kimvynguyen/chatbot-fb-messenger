@@ -230,7 +230,7 @@ def send_order(recipient_id,message_text):
             },
             "buttons":[
              {
-                "title": "",
+                "title": "Mua ngay",
                 "type": "postback",
                 "payload": "Mua ngay"
              }
