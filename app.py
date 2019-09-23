@@ -174,7 +174,7 @@ def send_attachment(recipient_id,message_text):
             },
             "buttons":[
                 {
-                    "type": "postback",
+                    "type": "payload",
                     "title":"Mua hang online",
                     "url": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}"
                 },
@@ -230,7 +230,14 @@ def send_order(recipient_id,message_text):
               "webview_height_ratio": "tall",
             }
           }
-        ]
+        ],
+        "buttons":[
+            {
+                "title": "Xem danh sach",
+                "type": "postback",
+                "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Phuong tien giao thong\"}"
+
+            }]
       }
     }
         }
