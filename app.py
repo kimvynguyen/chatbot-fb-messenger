@@ -174,9 +174,9 @@ def send_attachment(recipient_id,message_text):
             },
             "buttons":[
                 {
-                    "type": "payload",
+                    "type": "postback",
                     "title":"Mua hang online",
-                    "url": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}"
+                    "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}"
                 },
                 {
                     "type": "postback",
