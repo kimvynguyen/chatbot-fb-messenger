@@ -167,7 +167,7 @@ def send_attachment(recipient_id,message_text):
             "default_action": {
               "type": "web_url",
               "url": "https://www.mykingdom.com.vn",
-              "messenger_extensions": False,
+              "messenger_extensions": True,
               "webview_height_ratio": "full",
             },
             "buttons":[
