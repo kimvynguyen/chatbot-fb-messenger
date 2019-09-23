@@ -114,7 +114,7 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}":
                         send_message(sender_id, "Cam on ban da dat mua san pham cua chung toi.\nNhan vien cua chung toi se som lien he lai voi ban!")
                         send_quick_reply(sender_id,"Ban co hai long ve dich vu cua chung toi khong?")
-                    elif messaging_event['postback']['payload'] == "Payload Mua hang online":
+                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}":
                         send_order(sender_id,"Mua hang online")
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
@@ -176,7 +176,7 @@ def send_attachment(recipient_id,message_text):
                 {
                     "type": "postback",
                     "title":"Mua hang online",
-                    "url": "Payload Mua hang online"
+                    "url": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}"
                 },
                 {
                     "type": "postback",
@@ -228,8 +228,7 @@ def send_order(recipient_id,message_text):
               "url": "https://bot-static.m-co.me/order",
               "messenger_extensions": True,
               "webview_height_ratio": "tall",
-            },
-            "buttons":[]   
+            }
           }
         ]
       }
