@@ -173,8 +173,8 @@ def send_attachment(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "title":"Ve chung toi",
-                    "url":"https://www.mykingdom.com.vn"
+                    "title":"Mua hang online",
+                    "url": "https://bot-static.m-co.me/order"
                 },
                 {
                     "type": "postback",
