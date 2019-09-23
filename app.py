@@ -80,6 +80,7 @@ def Order(recipient_id,message_text):
     }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+                      
 @app.route('/', methods=['POST'])
 
 def webhook():
@@ -165,9 +166,9 @@ def send_attachment(recipient_id,message_text):
             "subtitle":"Platform giup khach hang tuong tac truc quan voi doanh nghiep",
             "default_action": {
               "type": "web_url",
-              "url": "https://fb-messenger-bot-1.herokuapp.com/order",
-              "messenger_extensions": True,
-              "webview_height_ratio": "tall",
+              "url": "https://www.mykingdom.com.vn",
+              "messenger_extensions": False,
+              "webview_height_ratio": "full",
             },
             "buttons":[
                 {
