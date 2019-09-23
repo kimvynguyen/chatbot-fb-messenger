@@ -166,7 +166,7 @@ def send_attachment(recipient_id,message_text):
             "subtitle":"Platform giup khach hang tuong tac truc quan voi doanh nghiep",
             "default_action": {
               "type": "web_url",
-              "url": "https://fptplay.vn",
+              "url": "https://ebank.tpb.vn/retail/v8/",
               "messenger_extensions": True,
               "webview_height_ratio": "full",
             },
