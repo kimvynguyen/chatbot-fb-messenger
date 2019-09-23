@@ -19,6 +19,67 @@ def verify():
 
     return "Hello world", 200
 
+@app.route('/order', methods=['POST'])
+#ham mua hang online
+def Order(recipient_id,message_text):
+    log("sending order to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data= json.dumps({
+    "recipient": {
+        "id": recipient_id
+    },
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"generic",
+        "elements":[
+           {
+            "title": "Xe may xuc",
+            "subtitle": "399.000 VND",
+            "image_url": "https://imgur.com/TJuA5Zj.png",          
+            "buttons":
+             [
+             {
+                "title": "Mua",
+                "type": "postback",
+                "payload": "Mua ngay"
+             }
+             ]       
+           },
+           {
+            "title": "Xe can cau",
+            "subtitle": "399.000 VND",
+            "image_url": "https://imgur.com/5ibsmK0.png",          
+            "buttons": [
+                {
+                    "title": "Mua",
+                    "type": "postback",
+                    "payload": "Mua ngay"
+                }
+            ]
+        },
+        {
+        "title": "Xe ben",
+        "subtitle": "399.000 VND",
+        "image_url": "https://imgur.com/Bnci9NZ.png",          
+        "buttons": [
+            {
+                "title": "Mua",
+                "type": "postback",
+                "payload": "Mua ngay"
+            }
+        ]
+    }
+]
+}
+    }
+    })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 @app.route('/', methods=['POST'])
 
 def webhook():
@@ -104,7 +165,7 @@ def send_attachment(recipient_id,message_text):
             "subtitle":"Platform giup khach hang tuong tac truc quan voi doanh nghiep",
             "default_action": {
               "type": "web_url",
-              "url": "https://www.mykingdom.com.vn",
+              "url": "https://fb-messenger-bot-1.herokuapp.com/order",
               "messenger_extensions": True,
               "webview_height_ratio": "tall",
             },
