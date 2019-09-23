@@ -209,40 +209,7 @@ def send_order(recipient_id,message_text):
     headers = {
         "Content-Type": "application/json"
     }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "message": {
-            "attachment":{
-        "type":"template",
-        "payload":{
-        "template_type":"generic",
-        "elements":[
-           {
-            "title":"Mua hang online",
-            "image_url":"https://imgur.com/mCC4fXR.png",
-            "subtitle":"Mua hang online tai day",
-            "default_action": {
-              "type": "web_url",
-              "url": "https://bot-static.m-co.me/order",
-              "messenger_extensions": True,
-              "webview_height_ratio": "tall",
-            },
-           "buttons":[
-            {
-                "title": "Xem danh sach",
-                "type": "postback",
-                "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Phuong tien giao thong\"}"
-
-            }]
-          }
-        ]
-        
-      }
-    }
-}
-    })
+    
     r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
