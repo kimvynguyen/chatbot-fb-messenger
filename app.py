@@ -104,7 +104,7 @@ def webhook():
                         send_message(sender_id, "Cam on ban da chon Ichat la noi tin tuong lam nen tang.")
                         send_attachment(sender_id,"ichat")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}":
-                        webview(sender_id,"Mua hang online")
+                        send_order(sender_id,"Mua hang online")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Chia se\"}":
                         share(sender_id,"Chia se")
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Danh muc san pham\"}":
@@ -114,8 +114,7 @@ def webhook():
                     elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua ngay\"}":
                         send_message(sender_id, "Cam on ban da dat mua san pham cua chung toi.\nNhan vien cua chung toi se som lien he lai voi ban!")
                         send_quick_reply(sender_id,"Ban co hai long ve dich vu cua chung toi khong?")
-                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Mua hang online\"}":
-                        send_order(sender_id,"Mua hang online")
+                   
                 #send_message(sender_id, "Nhan vien cua chung toi se tuong tac voi ban!")
 
     return "ok", 200
