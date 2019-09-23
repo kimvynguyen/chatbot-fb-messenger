@@ -201,7 +201,7 @@ def send_attachment(recipient_id,message_text):
         log(r.text)
 
 def send_order(recipient_id,message_text):
-    log("sending order  to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    log("sending order to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -220,27 +220,28 @@ def send_order(recipient_id,message_text):
         "template_type":"generic",
         "elements":[
            {
-            "title":"Do choi van dong",
-            "image_url":"https://imgur.com/15NSVJ2.png",
-            "subtitle":"Xem danh sach",
+            "title":"Mua hang online",
+            "image_url":"https://imgur.com/mCC4fXR.png",
+            "subtitle":"Mua hang online tai day",
             "default_action": {
               "type": "web_url",
               "url": "https://bot-static.m-co.me/order",
               "messenger_extensions": True,
               "webview_height_ratio": "tall",
-            }
-          }
-        ],
-        "buttons":[
+            },
+           "buttons":[
             {
                 "title": "Xem danh sach",
                 "type": "postback",
                 "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Phuong tien giao thong\"}"
 
             }]
+          }
+        ]
+        
       }
     }
-        }
+}
     })
     r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
