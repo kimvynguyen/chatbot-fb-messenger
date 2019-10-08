@@ -47,7 +47,7 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                   send_message(sender_id,'Chúng tôi quan niệm: "Đừng ép doanh nghiệp linh hoạt theo giải pháp mà phải đem đến giải pháp linh hoạt với doanh nghiệp"')
+                   send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                    send_attachment(sender_id,"vmarketing")
                    send_button(sender_id,"vmarkeing")
                     
@@ -103,17 +103,17 @@ def send_attachment(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "postback",
-                    "title":"Chatbot Marketing - Tiếp cận dễ dàng ",
+                    "title":"Chatbot Marketing - Tiep can de dang ",
                     "payload": "chatbot"
                 },
                 {
                     "type": "postback",
-                    "title": "Mobile Marketing - Nhận diện nhanh chóng",
+                    "title": "Mobile Marketing - Nhan dien nhanh chong",
                     "payload": "mobile"
                 },
                 {
                     "type": "postback",
-                    "title":" Online to Offline - Quan tâm xuyên suốt",
+                    "title":" Online to Offline - Quan tam xuyen suot",
                     "payload": "online"
                 }
                 ]   
@@ -140,7 +140,7 @@ def send_button(recipient_id,message_text):
     data=json.dumps({
             {
             "type": "postback",
-            "title": "Chương trình loyalty - Gắn kết dài lâu",
+            "title": "Chuong trinh loyalty - Gan ket dai lau",
             "payload": "loyalty"
             }   
     })
