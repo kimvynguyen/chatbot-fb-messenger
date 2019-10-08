@@ -48,11 +48,10 @@ def webhook():
                         send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id,"vmarketing")
-                    if messaging_event['postback']['payload'] == "tu van":
+                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"tu van\"}":
                         send_message(sender_id,"Vmarketing")
-                        web_view(sender_id,"vmarketing") 
-                   
-                    
+                        web_view(sender_id,"vmarketing")
+                                         
     return "ok", 200
 
 #ham gui tin nhan
@@ -152,17 +151,17 @@ def send_quick_reply(recipient_id,message_text):
         },
         "messaging_type": "RESPONSE",
         "message":{
-            "text": "Ban co can thong tin gi ve chung toi khong nhi? ",
+            "text": "Ban co can thong tin gi ve chung toi khong nhi?",
             "quick_replies":[
             {
                 "content_type":"text",
                 "title":"Chat voi nhan vien",
-                "payload":"chat",
+                "payload": "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"chat\"}"
                 
             },{
                 "content_type":"text",
-                "title":"De lai thong tin",
-                "payload":"tu van",
+                "title": "De lai thong tin",
+                "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"tu van\"}"
                 
             }
             ]
