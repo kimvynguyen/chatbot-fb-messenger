@@ -97,7 +97,7 @@ def send_attachment(recipient_id,message_text):
         "elements":[
            {
             "title":"Vmarketing",
-            "image_url":"https://vmarketing.vn/wp-content/uploads/2014/12/cropped-vlogo1.png",
+            "image_url":"https://drive.google.com/open?id=1idJiBzo9Nt8pyajD8plqs5KZi8zqGgv6.png",
             "buttons":[
                 {
                     "type": "postback",
