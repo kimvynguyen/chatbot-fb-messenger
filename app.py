@@ -97,7 +97,7 @@ def send_attachment(recipient_id,message_text):
         "elements":[
            {
             "title":"Vmarketing",
-            "image_url":"https://imgur.com/yOHi0Q4.png",
+            "image_url":"https://imgur.com/9lx0cNv.png",
             "buttons":[
                 {
                     "type": "postback",
