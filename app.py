@@ -160,7 +160,7 @@ def send_quick_reply(recipient_id,message_text):
                 
             },{
                 "content_type":"text",
-                "title":"De lai thong tin tu van",
+                "title":"De lai thong tin",
                 "payload":"tu van",
                 
             }
@@ -193,7 +193,6 @@ def web_view(recipient_id,message_text):
         "elements":[
            {
             "title":"Vui long de lai thong tin lien he cua ban de chung toi tu van nhe!",
-            "image_url":"https://imgur.com/9lx0cNv.png",
             "buttons":[
                 {
                     "type": "web_url",
