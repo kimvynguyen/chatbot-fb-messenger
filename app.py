@@ -49,6 +49,7 @@ def webhook():
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id,"vmarketing")
                     if messaging_event['postback']['payload'] == "tu van":
+                        send_message(sender_id,"Vmarketing")
                         web_view(sender_id,"vmarketing") 
                    
                     
