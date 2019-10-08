@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 from flask import Flask, request
 
+
 app = Flask(__name__)
 
 
@@ -100,19 +101,25 @@ def send_attachment(recipient_id,message_text):
             "image_url":"https://imgur.com/9lx0cNv.png",
             "buttons":[
                 {
-                    "type": "postback",
+                    "type": "web_url",
+                    "url": "https://vmarketing.vn",
                     "title":"Chatbot Marketing",
-                    "payload": "chatbot"
+                    "webview_height_ratio": "tall",
+                    "messenger_extensions": True,
                 },
                 {
-                    "type": "postback",
-                    "title": "Mobile Marketing",
-                    "payload": "mobile"
+                    "type": "web_url",
+                    "url": "https://vmarketing.vn",
+                    "title":"Mobile Marketing",
+                    "webview_height_ratio": "tall",
+                    "messenger_extensions": True,
                 },
                 {
-                    "type": "postback",
-                    "title":" Online to Offline",
-                    "payload": "online"
+                    "type": "web_url",
+                    "url": "https://vmarketing.vn",
+                    "title":"Online to Offline",
+                    "webview_height_ratio": "tall",
+                    "messenger_extensions": True,
                 }
              
                 ]   
@@ -127,7 +134,7 @@ def send_attachment(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
-    
+
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
         if type(msg) is dict:
