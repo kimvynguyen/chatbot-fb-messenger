@@ -102,21 +102,21 @@ def send_attachment(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://vmarketing.vn",
+                    "url": "https://solutions.vmarketing.vn/chatbots-communication/",
                     "title":"Chatbot Marketing",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
                 },
                 {
                     "type": "web_url",
-                    "url": "https://vmarketing.vn",
+                    "url": "https://solutions.vmarketing.vn/mobile-marketing-solutions-giai-phap-tich-hop/",
                     "title":"Mobile Marketing",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
                 },
                 {
                     "type": "web_url",
-                    "url": "https://forms.gle/dtQrL4ks6fKTqTXC6",
+                    "url": "https://solutions.vmarketing.vn/o2o-solutions/",
                     "title":"Online to Offline",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
