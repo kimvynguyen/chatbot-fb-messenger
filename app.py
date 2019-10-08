@@ -113,12 +113,8 @@ def send_attachment(recipient_id,message_text):
                     "type": "postback",
                     "title":" Online to Offline",
                     "payload": "online"
-                },
-                {
-                    "type": "postback",
-                    "title": "Chuong trinh loyalty",
-                    "payload": "loyalty"
-                }   
+                }
+             
                 ]   
           }
         ]
