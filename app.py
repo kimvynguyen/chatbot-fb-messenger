@@ -101,19 +101,24 @@ def send_attachment(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "postback",
-                    "title":"Chatbot Marketing - Tiep can de dang ",
+                    "title":"Chatbot Marketing",
                     "payload": "chatbot"
                 },
                 {
                     "type": "postback",
-                    "title": "Mobile Marketing - Nhan dien nhanh chong ",
+                    "title": "Mobile Marketing",
                     "payload": "mobile"
                 },
                 {
                     "type": "postback",
-                    "title":" Online to Offline - Quan tam xuyen suot ",
+                    "title":" Online to Offline",
                     "payload": "online"
-                }
+                },
+                {
+                    "type": "postback",
+                    "title": "Chuong trinh loyalty",
+                    "payload": "loyalty"
+                }   
                 ]   
           }
         ]
