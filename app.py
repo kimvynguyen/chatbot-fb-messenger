@@ -50,9 +50,7 @@ def webhook():
                         send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id,"vmarketing")
-                    elif messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"tu van\"}":
-                        send_message(sender_id,"Vmarketing")
-                        web_view(sender_id,"vmarketing")
+                    
                                          
     return "ok", 200
 
