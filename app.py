@@ -116,7 +116,7 @@ def send_attachment(recipient_id,message_text):
                 },
                 {
                     "type": "web_url",
-                    "url": "https://vmarketing.vn",
+                    "url": "https://forms.gle/dtQrL4ks6fKTqTXC6",
                     "title":"Online to Offline",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
