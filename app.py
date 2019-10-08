@@ -46,7 +46,7 @@ def webhook():
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
-                        send_button(sender_id,"vmarkeing")
+                       
                    
                     
     return "ok", 200
@@ -125,27 +125,7 @@ def send_attachment(recipient_id,message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
-#ham gui nut
-def send_button(recipient_id,message_text):
-    log("sending button to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data=json.dumps({
-            {
-            "type": "postback",
-            "title": "Chuong trinh loyalty - Gan ket dai lau",
-            "payload": "loyalty"
-            }   
-    })
-    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
     
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
