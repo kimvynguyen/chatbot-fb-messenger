@@ -151,6 +151,7 @@ def send_quick_reply(recipient_id,message_text):
         },
         "messaging_type": "RESPONSE",
         "message":{
+            "text": "",
             "quick_replies":[
             {
                 "content_type":"text",
