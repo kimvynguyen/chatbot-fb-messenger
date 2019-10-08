@@ -40,16 +40,14 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
 
-                if messaging_event.get("delivery"):  # delivery confirmation
-                    pass
-
-                if messaging_event.get("optin"):  # optin confirmation
-                    pass
-
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                   send_message(sender_id,'Chung toi quan niem: Dung ep doanh nghep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep')
-                   send_attachment(sender_id,"vmarketing")
-                   send_button(sender_id,"vmarkeing")
+                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
+                    recipient_id = messaging_event["recipient"]["id"]
+                    if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
+                        send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
+                        send_attachment(sender_id,"vmarketing")
+                        send_button(sender_id,"vmarkeing")
+                   
                     
     return "ok", 200
 
@@ -108,12 +106,12 @@ def send_attachment(recipient_id,message_text):
                 },
                 {
                     "type": "postback",
-                    "title": "Mobile Marketing - Nhan dien nhanh chong",
+                    "title": "Mobile Marketing - Nhan dien nhanh chong ",
                     "payload": "mobile"
                 },
                 {
                     "type": "postback",
-                    "title":" Online to Offline - Quan tam xuyen suot",
+                    "title":" Online to Offline - Quan tam xuyen suot ",
                     "payload": "online"
                 }
                 ]   
@@ -144,10 +142,6 @@ def send_button(recipient_id,message_text):
             "payload": "loyalty"
             }   
     })
-    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
     
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
