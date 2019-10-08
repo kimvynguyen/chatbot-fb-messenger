@@ -156,7 +156,7 @@ def send_quick_reply(recipient_id,message_text):
             {
                 "content_type":"text",
                 "title":"Chat voi nhan vien",
-                "payload": "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"chat\"}"
+                "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"chat\"}"
                 
             },{
                 "content_type":"text",
