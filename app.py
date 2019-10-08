@@ -134,6 +134,82 @@ def send_attachment(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
+#ham cau tra loi nhanh
+def send_quick_reply(recipient_id,message_text):
+    log("sending quick reply to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({ 
+         "recipient": {
+            "id": recipient_id
+        },
+        "messaging_type": "RESPONSE",
+        "message":{
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title":"Chat voi nhan vien",
+                "payload":"chat",
+                
+            },{
+                "content_type":"text",
+                "title":"De lai thong tin tu van",
+                "payload":"tu van",
+                
+            }
+            ]
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+
+#de lai thong tin tu van -> hien thi webview
+def web_view(recipient_id,message_text):
+    log("sending web view to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({ 
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "attachment":{
+        "type":"template",
+        "payload":{
+        "template_type":"generic",
+        "elements":[
+           {
+            "title":"Vui long de lai thong tin lien he cua ban de chung toi tu van nhe!",
+            "image_url":"https://imgur.com/9lx0cNv.png",
+            "buttons":[
+                {
+                    "type": "web_url",
+                    "url": "https://vmarketing.vn/lien-he/",
+                    "title":"Thong tin lien he",
+                    "webview_height_ratio": "tall",
+                    "messenger_extensions": True,
+                }
+            ]
+           } ]
+        } }
+        }
+
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
