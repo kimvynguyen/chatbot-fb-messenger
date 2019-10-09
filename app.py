@@ -213,24 +213,33 @@ def web_view(recipient_id,message_text):
         log(r.text)
 
 #tra loi comment tu dong
-def comment_on_posts(posts, amount):
-    counter = 0
-    for post in posts:
-        if counter >= amount:
-            break
-        else:
-            counter = counter + 1
-        url = "https://graph.facebook.com/{0}/comments".format(post['id'])
-        message = "Cam on ban da quan tam den Vmarketing. Vui long kiem tra tin nhan de duoc tu van cu the ve cac dich vu cua chung toi"
-        parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
-        s = requests.post(url, data = parameters)
-        
- #lay noi dung comment
 def get_posts():
-    payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
-    r = requests.get('https://graph.facebook.com/me/feed', params=payload)
+    """Returns dictionary of id, first names of people who posted on my wall
+    between start and end time"""
+
+    query = ("SELECT post_id, actor_id, message FROM stream WHERE filter_key = 'others' AND source_id = me()")
+
+    payload = {'q': query, 'access_token':os.environ["PAGE_ACCESS_TOKEN"]}
+
+    r = requests.get('https://graph.facebook.com/fql', params=payload)
+
     result = json.loads(r.text)
+
     return result['data']
+
+def commentall(wallposts):
+    """Comments thank you on all posts"""
+
+    for wallpost in wallposts:
+        r = requests.get('https://graph.facebook.com/%s' %
+                wallpost['actor_id'])
+        url = 'https://graph.facebook.com/%s/comments' % wallpost['post_id']
+        user = json.loads(r.text)
+        message = 'Cam on %s da quan tam den Vmarketing. Vui long kiem tra inbox de duoc tu van ve cac dich vu cua Vmarketing nhe!)' % user['first_name']
+        payload = {'access_token': os.environ["PAGE_ACCESS_TOKEN"], 'message': message}
+        s = requests.post(url, data=payload)
+
+        print ("Wall post %s done" % wallpost['post_id'])
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
@@ -246,5 +255,4 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
 
 if __name__ == '__main__':
     app.run(debug=True)
-    posts = get_posts()
-    comment_on_posts(posts, 25)
+    commentall(get_posts())
