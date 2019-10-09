@@ -212,6 +212,25 @@ def web_view(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
+#tra loi comment tu dong
+def comment_on_posts(posts, amount):
+    counter = 0
+    for post in posts:
+        if counter >= amount:
+            break
+        else:
+            counter = counter + 1
+        url = "https://graph.facebook.com/{0}/comments".format(post['id'])
+        message = "Cam on ban da quan tam den Vmarketing. Vui long kiem tra tin nhan de duoc tu van cu the ve cac dich vu cua chung toi"
+        parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
+        s = requests.post(url, data = parameters)
+        
+ #lay noi dung comment
+def get_posts():
+    payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
+    r = requests.get('https://graph.facebook.com/me/feed', params=payload)
+    result = json.loads(r.text)
+    return result['data']
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
@@ -227,3 +246,5 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
 
 if __name__ == '__main__':
     app.run(debug=True)
+    posts = get_posts()
+    comment_on_posts(posts, 25)
