@@ -237,7 +237,7 @@ def reply_comment(comments):
         message = "Cam on ban da quan tam den Vmarketing."
         parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
         s = requests.post(url, data = parameters)
-    return json.loads(r.text)
+    return json.loads(s.text)
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
