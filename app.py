@@ -238,9 +238,9 @@ def comment_on_posts(posts):
 def reply_comment(comments):
     for comment in comments:
         url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comment)
-        message = "Cam on ban da quan tam den Vmarketing."
+        message = "Cam on ban da quan tam den Vmarketing"
         parameters = {'access_token' : 'EAAFvTbGl9ccBAIYhdfzd3PZAzpEUr6hi4aUy1RhxQgSWs4x5JTJDT4dUOrKoVXQwZCLZCgKTluaTFXPv0XDOy27BwPyGeDpa3PzPDxiUB4YwAPqZAZCBDvQSYgxJa28mFJIxpTdkr0Jlyyr1zj2fzHTXJi5ifT1evq6CLqdScpfmKkRuK9mqAnkkWq8Wo7ZBUZD', 'message' : message}
-        s = requests.post(url, data = parameters)
+        s = requests.post(url, params = parameters)
     return json.loads(s.text)
 
 
