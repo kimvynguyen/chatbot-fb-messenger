@@ -227,14 +227,16 @@ def comment_on_posts(posts):
         payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
         r=requests.get(url,params=payload)
         result = json.loads(r.text)
-        res = result['data']
+        res.append(result['data'])
+    return res
 
 #tra loi comment
 def reply_comment(comments):
-    url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comments['id'])
-    message = "Cam on ban da quan tam den Vmarketing."
-    parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
-    s = requests.post(url, data = parameters)
+    for comment in comments:
+        url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comment['id'])
+        message = "Cam on ban da quan tam den Vmarketing."
+        parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
+        s = requests.post(url, data = parameters)
     return json.loads(r.text)
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
