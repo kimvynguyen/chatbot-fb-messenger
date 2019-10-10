@@ -236,7 +236,7 @@ def reply_comment(comments):
         url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comment['id'])
         message = "Cam on ban da quan tam den Vmarketing."
         parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
-        s = requests.post(url, data = parameters)
+        s = requests.post(url, params = parameters)
     return json.loads(s.text)
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
