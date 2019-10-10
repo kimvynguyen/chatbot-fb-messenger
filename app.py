@@ -216,7 +216,7 @@ def web_view(recipient_id,message_text):
 #lay cac bai dang
 def get_posts():
     payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
-    r = requests.get('https://graph.facebook.com/106386890772856/feed', params=payload)
+    r = requests.get('https://graph.facebook.com/me/feed', params=payload)
     result = json.loads(r.text)
     return result['data']
 
@@ -237,7 +237,7 @@ def reply_comment(comments):
         message = "Cam on ban da quan tam den Vmarketing."
         parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
         s = requests.post(url, params = parameters)
-    return json.loads(s.text)
+    return 'ok',200
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
