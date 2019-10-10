@@ -9,6 +9,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
@@ -45,7 +46,7 @@ def webhook():
                         send_message(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac dich vu cua Vmarketing')
                  
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message 
+                    sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
@@ -213,31 +214,36 @@ def web_view(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
-#lay cac bai dang
+token = 'EAAFvTbGl9ccBAIYhdfzd3PZAzpEUr6hi4aUy1RhxQgSWs4x5JTJDT4dUOrKoVXQwZCLZCgKTluaTFXPv0XDOy27BwPyGeDpa3PzPDxiUB4YwAPqZAZCBDvQSYgxJa28mFJIxpTdkr0Jlyyr1zj2fzHTXJi5ifT1evq6CLqdScpfmKkRuK9mqAnkkWq8Wo7ZBUZD'
+
 def get_posts():
-    payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
+    payload = {'access_token' : token}
     r = requests.get('https://graph.facebook.com/me/feed', params=payload)
     result = json.loads(r.text)
     return result['data']
 
 #lay commment trong cac bai dang
 def comment_on_posts(posts):
+    res = []
     for post in posts:
         url = "https://graph.facebook.com/{0}/comments".format(post['id'])
-        payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
+        payload = {'access_token' : token}
         r=requests.get(url,params=payload)
         result = json.loads(r.text)
-        res.append(result['data'])
+        for dt in result['data']:
+            dt_id = dt['id']
+            res.append(dt_id)
     return res
 
 #tra loi comment
 def reply_comment(comments):
     for comment in comments:
-        url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comment['id'])
+        url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comment)
         message = "Cam on ban da quan tam den Vmarketing."
-        parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
+        parameters = {'access_token' : token, 'message' : message}
         s = requests.post(url, params = parameters)
-    return 'ok',200
+    return 'ok'
+
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
@@ -250,9 +256,10 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
         pass  # squash logging errors in case of non-ascii text
     sys.stdout.flush()
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
     posts = get_posts()
     comments=comment_on_posts(posts)
     reply_comment(comments)
+    app.run(debug=True)
+    
+    
