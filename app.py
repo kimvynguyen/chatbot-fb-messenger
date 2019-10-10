@@ -222,6 +222,7 @@ def get_posts():
 
 #lay commment trong cac bai dang
 def comment_on_posts(posts):
+    res = []
     for post in posts:
         url = "https://graph.facebook.com/{0}/comments".format(post['id'])
         payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
