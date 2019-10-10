@@ -213,10 +213,10 @@ def web_view(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
-#tra loi comment tu dong
+#lay cac bai dang
 def get_posts():
     payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
-    r = requests.get('https://graph.facebook.com/me/feed', params=payload)
+    r = requests.get('https://graph.facebook.com/106386890772856/feed', params=payload)
     result = json.loads(r.text)
     return result['data']
 
@@ -226,9 +226,16 @@ def comment_on_posts(posts):
         url = "https://graph.facebook.com/{0}/comments".format(post['id'])
         payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
         r=requests.get(url,params=payload)
-        message = "Cam on ban da quan tam den Vmarketing. Vui long kiem tra tin nhan de duoc tu van cu the ve cac dich vu cua chung toi"
-        parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
-        s = requests.post(url, data = parameters)
+        result = json.loads(r.text)
+        res = result['data']
+
+#tra loi comment
+def reply_comment(comments):
+    url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comments['id'])
+    message = "Cam on ban da quan tam den Vmarketing."
+    parameters = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"], 'message' : message}
+    s = requests.post(url, data = parameters)
+    return json.loads(r.text)
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
@@ -245,4 +252,5 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
 if __name__ == '__main__':
     app.run(debug=True)
     posts = get_posts()
-    comment_on_posts(posts)
+    comments=comment_on_posts(posts)
+    reply_comment(comments)
