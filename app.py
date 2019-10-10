@@ -45,8 +45,7 @@ def webhook():
                         send_message(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac dich vu cua Vmarketing')
                  
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
-                    sender_name = messaging_event["sender"]["name"]   
+                    sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message 
                     recipient_id = messaging_event["recipient"]["id"]
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
