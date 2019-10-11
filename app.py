@@ -40,7 +40,6 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    sender_name = get_user(sender_id)
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
@@ -48,6 +47,7 @@ def webhook():
                         web_view(sender_id,"vmarketing")
                     elif message_text == 'Tu van ngay':
                         user_id = '2408679345879822'
+                        sender_name = get_user(sender_id)
                         send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(sender_name))
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         
