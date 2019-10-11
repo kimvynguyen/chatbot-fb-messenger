@@ -210,7 +210,7 @@ def send_quick_reply(recipient_id,message_text):
         },
         "messaging_type": "RESPONSE",
         "message":{
-            "text": "",
+            "text": "Ban co can them thong tin gi ve Vmarketing khong nhi?",
             "quick_replies":[
             {
                 "content_type":"text",
