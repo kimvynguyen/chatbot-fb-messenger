@@ -46,8 +46,9 @@ def webhook():
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
                     elif message_text == 'Tu van ngay':
+                        user_id = '100040591533588'
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
-                        push_notifications('100040591533588',"vmarketing")
+                        send_mes(user_id, "Khach hang can tuong tac voi ban!")
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
