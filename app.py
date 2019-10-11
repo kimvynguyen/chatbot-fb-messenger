@@ -57,7 +57,7 @@ def webhook():
                     r = requests.get(url,params = payload)
                     sender_name = r.json(['first_name']) + r.json(['last_name'])'''
                     user_id = '2408679345879822'
-                    send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(messaging_event["sender"]["first_name"] + messaging_event["sender"]["last_name"])
+                    send_mes(user_id, "Khach hang dang can tuong tac voi ban!")
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
