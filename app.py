@@ -42,7 +42,7 @@ def webhook():
                     message_text = messaging_event["message"]["text"]  # the message's text
                     url = "https://graph.facebook.com/{0}".format(sender_id)
                     payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
-                    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params = payload)
+                    r = requests.get(url,params = payload)
                     sender_name = r.json(['name'])
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
