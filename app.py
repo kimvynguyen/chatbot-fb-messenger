@@ -48,7 +48,7 @@ def webhook():
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         user_id ='2408679345879822'
                         url = "https://graph.facebook.com/{0}/notifications".format(user_id)
-                        payload = {'access_token' : token}
+                        payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
                         r=requests.post(url,params=payload)
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
@@ -214,18 +214,19 @@ def send_quick_reply(recipient_id,message_text):
             "quick_replies":[
             {
                 "content_type":"text",
-                "title": "Giai phap khac",
+                "title": 'Giai phap khac',
                 "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"giai phap\"}"
                 
             },
             {
                 "content_type":"text",
-                "title":"Tu van ngay",
+                "title":'Tu van ngay',
                 "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"chat\"}"
                 
-            },{
+            },
+            {
                 "content_type":"text",
-                "title": "Tu van sau",
+                "title": 'Tu van sau',
                 "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"tu van\"}"
                 
             }
@@ -291,5 +292,3 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
-    
