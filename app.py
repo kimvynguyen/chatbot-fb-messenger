@@ -40,6 +40,10 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
+                    url = "https://graph.facebook.com/{0}".format(sender_id)
+                    payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
+                    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params = payload)
+                    sender_name = r.json(['name'])
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
@@ -48,7 +52,7 @@ def webhook():
                     elif message_text == 'Tu van ngay':
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         user_id = '100040591533588'
-                        #send_mes(user_id, "Khach hang can tuong tac voi ban!")
+                        send_mes(user_id, "Khach hang %s can tuong tac voi ban!" % sender_name)
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
