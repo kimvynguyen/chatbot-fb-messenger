@@ -46,11 +46,8 @@ def webhook():
                         web_view(sender_id,"vmarketing")
                     elif message_text == 'Tu van ngay':
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
-                        user_id ='2408679345879822'
-                        url = "https://graph.facebook.com/{0}/notifications".format(user_id)
-                        payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
-                        r=requests.post(url,params=payload)
-
+                        push_notifications(sender_id,"vmarketing")
+                        
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
@@ -61,6 +58,17 @@ def webhook():
                     
                                          
     return "ok", 200
+
+def push_notifications(recipient_id, message_text):
+    log("push notifications to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    user_id ='2408679345879822'
+    url = "https://graph.facebook.com/{0}/notifications".format(user_id)
+    payload = {'access_token' : os.environ["PAGE_ACCESS_TOKEN"]}
+    r=requests.post(url,params=payload)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+
 
 def send_mes(recipient_id, message_text):
 
