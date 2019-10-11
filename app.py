@@ -40,21 +40,50 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    if message_text == 'De lai thong tin':
+                    if message_text == 'Giai phap khac':
+                        send_message(sender_id,"vmarketing")
+                    elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
-                    elif message_text == 'Chat voi nhan vien':
-                        send_message(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac dich vu cua Vmarketing')
-                 
+                    elif message_text == 'Tu van ngay':
+                        send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
+                        user_id ='2408679345879822'
+                        url = "https://graph.facebook.com/{0}/notifications".format(user_id)
+                        payload = {'access_token' : token}
+                        r=requests.post(url,params=payload)
+
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
-                        send_message(sender_id,'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
+                        send_quick_reply(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
-                        send_quick_reply(sender_id,"vmarketing")
+                    
                     
                                          
     return "ok", 200
+
+def send_mes(recipient_id, message_text):
+
+    log("sending mes to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "text": message_text
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 #ham gui tin nhan
 def send_message(recipient_id, message_text):
@@ -72,7 +101,35 @@ def send_message(recipient_id, message_text):
             "id": recipient_id
         },
         "message": {
-            "text": message_text
+            "attachment":{
+        "type":"template",
+        "payload":{
+        "template_type":"generic",
+        "elements":[
+           {
+            "title":"Vmarketing",
+            "image_url":"https://imgur.com/9lx0cNv.png",
+            "buttons":[
+                {
+                    "type": "web_url",
+                    "url": "https://solutions.vmarketing.vn/loyalty-program/",
+                    "title":"Loyalty Programs",
+                    "webview_height_ratio": "tall",
+                    "messenger_extensions": True,
+                },
+                {
+                    "type": "web_url",
+                    "url": "https://cloudcall.vmarketing.vn/cloudcall-tong-dai-doanh-nghiep-ip-pbx/",
+                    "title":"Cloud Call",
+                    "webview_height_ratio": "tall",
+                    "messenger_extensions": True,
+                }
+
+                ]   
+          }
+        ]
+      }
+    }
         }
     })
     r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
@@ -153,16 +210,22 @@ def send_quick_reply(recipient_id,message_text):
         },
         "messaging_type": "RESPONSE",
         "message":{
-            "text": "Ban co can thong tin gi ve chung toi khong nhi?",
+            "text": message_text,
             "quick_replies":[
             {
                 "content_type":"text",
-                "title":"Chat voi nhan vien",
+                "title": "Giai phap khac",
+                "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"giai phap\"}"
+                
+            },
+            {
+                "content_type":"text",
+                "title":"Tu van ngay",
                 "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"chat\"}"
                 
             },{
                 "content_type":"text",
-                "title": "De lai thong tin",
+                "title": "Tu van sau",
                 "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"tu van\"}"
                 
             }
@@ -214,36 +277,6 @@ def web_view(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
-token = 'EAAFvTbGl9ccBAIYhdfzd3PZAzpEUr6hi4aUy1RhxQgSWs4x5JTJDT4dUOrKoVXQwZCLZCgKTluaTFXPv0XDOy27BwPyGeDpa3PzPDxiUB4YwAPqZAZCBDvQSYgxJa28mFJIxpTdkr0Jlyyr1zj2fzHTXJi5ifT1evq6CLqdScpfmKkRuK9mqAnkkWq8Wo7ZBUZD'
-
-def get_posts():
-    payload = {'access_token' : token}
-    r = requests.get('https://graph.facebook.com/me/feed', params=payload)
-    result = json.loads(r.text)
-    return result['data']
-
-#lay commment trong cac bai dang
-def comment_on_posts(posts):
-    res = []
-    for post in posts:
-        url = "https://graph.facebook.com/{0}/comments".format(post['id'])
-        payload = {'access_token' : token}
-        r=requests.get(url,params=payload)
-        result = json.loads(r.text)
-        for dt in result['data']:
-            dt_id = dt['id']
-            res.append(dt_id)
-    return res
-
-#tra loi comment
-def reply_comment(comments):
-    for comment in comments:
-        url = "https://graph.facebook.com/v4.0/{0}/private_replies".format(comment)
-        message = "Cam on ban da quan tam den Vmarketing."
-        parameters = {'access_token' : token, 'message' : message}
-        s = requests.post(url, params = parameters)
-    return 'ok'
-
 
 def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     try:
@@ -257,9 +290,6 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     sys.stdout.flush()
 
 if __name__ == '__main__':
-    posts = get_posts()
-    comments=comment_on_posts(posts)
-    reply_comment(comments)
     app.run(debug=True)
     
     
