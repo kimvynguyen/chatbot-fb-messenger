@@ -40,11 +40,7 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    url = "https://graph.facebook.com/{0}".format(sender_id)
-                    payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
-                    r = requests.get(url,params = payload)
-                    result = json.loads(r.text)
-                    sender_name = result['first_name'] + result['last_name']
+                    sender_name = get_user(sender_id)
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
@@ -66,6 +62,14 @@ def webhook():
                     
                                          
     return "ok", 200
+
+def get_user(sender_id):
+    url = "https://graph.facebook.com/{0}".format(sender_id)
+    payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
+    r = requests.get(url,params = payload)
+    result = json.loads(r.text)
+    sender_name = result['first_name'] + result['last_name']
+    return sender_name
 
 def send_mes(recipient_id, message_text):
 
