@@ -58,6 +58,12 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
+                        url = "https://graph.facebook.com/{0}".format(sender_id)
+                        payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
+                        r = requests.get(url,params = payload)
+                        sender_name = r.json(['name'])
+                        user_id = '100040591533588'
+                        send_mes(user_id, "Khach hang {0} can tuong tac voi ban!".format(sender_name))
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
