@@ -62,7 +62,7 @@ def webhook():
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
-                        user_id = '100011780714058'
+                        user_id = '2408679345879822'
                         send_mes(user_id, "Khach hang dang can tuong tac voi ban!")
                     
                                          
