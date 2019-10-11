@@ -46,9 +46,9 @@ def webhook():
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
                     elif message_text == 'Tu van ngay':
-                        user_id = '100040591533588'
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
-                        send_mes(user_id, "Khach hang can tuong tac voi ban!")
+                        user_id = '100040591533588'
+                        #send_mes(user_id, "Khach hang can tuong tac voi ban!")
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
@@ -60,28 +60,6 @@ def webhook():
                     
                                          
     return "ok", 200
-
-def push_notifications():
-    log("sending notifications to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
-
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "message": {
-            "text": message_text
-        }
-    })
-    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
 
 def send_mes(recipient_id, message_text):
 
