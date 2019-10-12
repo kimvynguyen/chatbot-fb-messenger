@@ -267,7 +267,7 @@ def web_view(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://vmarketing.vn/lien-he/",
+                    "url": "https://forms.gle/xZtJA1k9v9Vr2vnd8",
                     "title": "Nhap thong tin",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
