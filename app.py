@@ -46,6 +46,7 @@ def webhook():
                         send_quick_reply(sender_id, "vmarketing")
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
+                        user_id = '2408679345879822'
                         send_mes(user_id, "Khach hang {0} da dien thong tin tu van!".format(sender_id))
                     elif message_text == 'Tu van ngay':
                         user_id = '2408679345879822'
