@@ -5,9 +5,10 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
-from contact import *
+
 
 app = Flask(__name__)
+
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -45,13 +46,9 @@ def webhook():
                         send_quick_reply(sender_id, "vmarketing")
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
-                        res = main(sender_id)
-                        if res == 'ok':
-                            send_mes(sender_id,'Cam on ban da dien thong tin tu van. Nhan vien cua chung toi se lien he voi ban ngay.')
-                            send_mes('2408679345879822','Khach hang {0} da dien thong tin tu van'.format(sender_id))
                     elif message_text == 'Tu van ngay':
                         user_id = '2408679345879822'
-                        send_mes(user_id, "Khach hang dang can tuong tac voi ban!")
+                        send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(sender_id))
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
@@ -270,7 +267,7 @@ def web_view(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://vmarketing.vn/lien-he/",
+                    "url": "https://forms.gle/xZtJA1k9v9Vr2vnd8",
                     "title": "Nhap thong tin",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
@@ -297,7 +294,6 @@ def log(msg, *args, **kwargs):  # simple wrapper for logging to stdout on heroku
     except UnicodeEncodeError:
         pass  # squash logging errors in case of non-ascii text
     sys.stdout.flush()
-
 
 if __name__ == '__main__':
     app.run(debug=True)
