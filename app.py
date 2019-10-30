@@ -269,7 +269,7 @@ def web_view(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://forms.gle/KBqmmC8G2SS92fvu9",
+                    "url": "https://forms.gle/Y4y39b7WnLQxbAzf7",
                     "title": "Nhap thong tin",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
