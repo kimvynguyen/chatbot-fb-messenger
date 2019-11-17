@@ -64,11 +64,10 @@ def webhook():
                     sender_name = r.json(['first_name']) + r.json(['last_name'])'''
                     
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
-                        send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
+                        send_mes(sender_id, '{0} Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"'.format(res['last_name']))
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
-                        name = res[0]['last_name']   
-                        send_mes(sender_id,name)
+                      
     return "ok", 200
 
 def get_infor(sender_id):
