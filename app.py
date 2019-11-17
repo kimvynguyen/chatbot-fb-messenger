@@ -40,7 +40,8 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    
+                    res = get_infor(sender_id)
+
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
@@ -56,6 +57,7 @@ def webhook():
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
+                    res = get_infor(sender_id)
                     '''url = "https://graph.facebook.com/{0}".format(sender_id)
                     payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
                     r = requests.get(url,params = payload)
@@ -65,9 +67,16 @@ def webhook():
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
-                    
+                        send_mes(sender_id,res["last_name"])
                                          
     return "ok", 200
+
+def get_infor(sender_id):
+    url = "https://graph.facebook.com/{0}".format(sender_id)
+    payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
+    r = requests.get(url,params = payload)
+    res = r.json()
+    return res
 
 def send_mes(recipient_id, message_text):
 
@@ -77,7 +86,8 @@ def send_mes(recipient_id, message_text):
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
     headers = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "charset": "utf-8"
     }
     data = json.dumps({
         "recipient": {
@@ -101,8 +111,7 @@ def send_message(recipient_id, message_text):
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
     headers = {
-        "Content-Type": "application/json",
-        "charset": "utf-8"
+        "Content-Type": "application/json"
     }
     data = json.dumps({
         "recipient": {
