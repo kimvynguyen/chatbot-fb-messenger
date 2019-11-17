@@ -67,8 +67,8 @@ def webhook():
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
-                        send_mes(sender_id,res["last_name"])
-                                         
+                        name = res[0]['last_name']   
+                        send_mes(sender_id,name)
     return "ok", 200
 
 def get_infor(sender_id):
