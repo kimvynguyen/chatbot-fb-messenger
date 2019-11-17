@@ -62,7 +62,7 @@ def webhook():
                     sender_name = r.json(['first_name']) + r.json(['last_name'])'''
                     
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
-                        send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
+                        send_mes(sender_id, 'Chúng toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
                     
@@ -101,7 +101,8 @@ def send_message(recipient_id, message_text):
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
     headers = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "charset": "utf-8"
     }
     data = json.dumps({
         "recipient": {
