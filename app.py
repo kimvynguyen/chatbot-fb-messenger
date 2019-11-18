@@ -64,7 +64,7 @@ def webhook():
                     sender_name = r.json(['first_name']) + r.json(['last_name'])'''
                     
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
-                        send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
+                        send_mes(sender_id, '{0} Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"'.format(res['last_name']))
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
                       
@@ -74,7 +74,7 @@ def get_infor(sender_id):
     url = "https://graph.facebook.com/{0}".format(sender_id)
     payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
     r = requests.get(url,params = payload)
-    res = r.json()
+    res = json.loads(r.text)
     return res
 
 def send_mes(recipient_id, message_text):
