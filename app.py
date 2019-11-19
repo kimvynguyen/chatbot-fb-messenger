@@ -47,11 +47,11 @@ def webhook():
                         send_quick_reply(sender_id, "vmarketing")
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
-                        user_id = '2408679345879822'
-                        send_mes(user_id, "Khach hang {0} da dien thong tin tu van!".format(sender_id))
+                        #user_id = '2408679345879822'
+                        #send_mes(user_id, "Khach hang {0} da dien thong tin tu van!".format(sender_id))
                     elif message_text == 'Tu van ngay':
                         user_id = '2408679345879822'
-                        send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(sender_id))
+                        send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(res))
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
@@ -67,15 +67,18 @@ def webhook():
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
-                      
+                                         
     return "ok", 200
 
 def get_infor(sender_id):
     url = "https://graph.facebook.com/{0}".format(sender_id)
-    payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
+    payload = { 
+        "fields": "name"
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"] 
+        }
     r = requests.get(url,params = payload)
-    res = json.loads(r.text)
-    return res
+    result = json.loads(r.text)
+    return result['name']
 
 def send_mes(recipient_id, message_text):
 
@@ -83,7 +86,7 @@ def send_mes(recipient_id, message_text):
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
+    } 
     headers = {
         "Content-Type": "application/json",
         "charset": "utf-8"
@@ -92,7 +95,7 @@ def send_mes(recipient_id, message_text):
         "recipient": {
             "id": recipient_id
         },
-        "message": {
+        "message": { 
             "text": message_text
         }
     })
