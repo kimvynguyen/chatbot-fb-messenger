@@ -51,7 +51,7 @@ def webhook():
                         #send_mes(user_id, "Khach hang {0} da dien thong tin tu van!".format(sender_id))
                     elif message_text == 'Tu van ngay':
                         user_id = '2408679345879822'
-                        send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(sender_id))
+                        send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(res))
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
@@ -73,7 +73,7 @@ def webhook():
 def get_infor(sender_id):
     url = "https://graph.facebook.com/{0}".format(sender_id)
     payload = { 
-        "fields": "name"
+        "fields": "name",
         "access_token": os.environ["PAGE_ACCESS_TOKEN"] 
         }
     r = requests.get(url,params = payload)
