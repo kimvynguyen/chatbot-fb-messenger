@@ -47,21 +47,15 @@ def webhook():
                         send_quick_reply(sender_id, "vmarketing")
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
-                        #user_id = '2408679345879822'
-                        #send_mes(user_id, "Khach hang {0} da dien thong tin tu van!".format(sender_id))
                     elif message_text == 'Tu van ngay':
                         user_id = '2408679345879822'
-                        send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(res))
+                        send_mes(user_id, "Khach hang dang can tuong tac voi ban!")
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
                     res = get_infor(sender_id)
-                    '''url = "https://graph.facebook.com/{0}".format(sender_id)
-                    payload = { "access_token": os.environ["PAGE_ACCESS_TOKEN"] }
-                    r = requests.get(url,params = payload)
-                    sender_name = r.json(['first_name']) + r.json(['last_name'])'''
                     
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
