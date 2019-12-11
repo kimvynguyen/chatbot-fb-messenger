@@ -48,9 +48,9 @@ def webhook():
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
                     elif message_text == 'Tu van ngay':
+                        send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         user_id = '2408679345879822'
                         send_mes(user_id, "Khach hang dang can tuong tac voi ban!")
-                        send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
@@ -275,7 +275,7 @@ def web_view(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://forms.gle/Y4y39b7WnLQxbAzf7",
+                    "url": "https://forms.gle/E9d776uG3YnFwq5A8",
                     "title": "Nhap thong tin",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
