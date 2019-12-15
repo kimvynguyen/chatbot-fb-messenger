@@ -41,9 +41,11 @@ def webhook():
                     if message_text == 'Yes':
                         get_infor_employee(sender_id,"SDT cua ban la:")
                         SDT = messaging_event["message"]["text"]
-                        get_infor_employee(sender_id,"Email cua ban la:")
-                        email = messaging_event["message"]["text"]
-                        insert_employee(name,sender_id,SDT,email)
+                        if SDT != "":
+                            get_infor_employee(sender_id,"Email cua ban la:")
+                            email = messaging_event["message"]["text"]
+                        if email != "":
+                            insert_employee(name,sender_id,SDT,email)
 
                     elif message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
