@@ -5,7 +5,7 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
-
+import employee
 
 app = Flask(__name__)
 
@@ -40,26 +40,34 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    res = get_infor(sender_id)
+                    name = get_infor(sender_id)
+                    if message_text == 'Yes':
+                        get_infor_employee(sender_id,"SDT cua ban la:")
+                        SDT = messaging_event["message"]["text"]
+                        get_infor_employee(sender_id,"Email cua ban la:")
+                        email = messaging_event["message"]["text"]
+                        insert_employee(name,sender_id,SDT,email)
 
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
                     elif message_text == 'Tu van sau':
                         web_view(sender_id,"vmarketing")
-                    elif message_text == 'Tu van ngay':
-                        send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
                         #user_id = '2408679345879822'
-                        #send_mes(user_id, "Khach hang dang can tuong tac voi ban!")
+                        #send_mes(user_id, "Khach hang {0} da dien thong tin tu van!".format(sender_id))
+                    elif message_text == 'Tu van ngay':
+                        #user_id = '2408679345879822'
+                        send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
+                        #send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(res))
                         
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
                     res = get_infor(sender_id)
-                    
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
+                        send_check_employee(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
                                          
     return "ok", 200
@@ -67,12 +75,74 @@ def webhook():
 def get_infor(sender_id):
     url = "https://graph.facebook.com/{0}".format(sender_id)
     payload = { 
-        "fields": "name",
+        "fields": "name,gender",
         "access_token": os.environ["PAGE_ACCESS_TOKEN"] 
         }
     r = requests.get(url,params = payload)
     result = json.loads(r.text)
     return result['name']
+
+#ham check nhan vien
+def send_check_employee(recipient_id,message_text):
+    log("send check employee to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({ 
+         "recipient": {
+            "id": recipient_id
+        },
+        "messaging_type": "RESPONSE",
+        "message":{
+            "text": "Ban co phai là nhan vien của Vmarketing khong?",
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title": 'Yes',
+                "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"yes\"}"
+                
+            },
+            {
+                "content_type":"text",
+                "title":'No',
+                "payload": "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"no\"}"
+                
+            }
+            ]
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+
+#ham nhap TT nhan vien
+def get_infor_employee (recipient_id, message_text):
+
+    log("get infor  to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    } 
+    headers = {
+        "Content-Type": "application/json",
+        "charset": "utf-8"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": { 
+            "text": message_text
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 def send_mes(recipient_id, message_text):
 
@@ -208,6 +278,7 @@ def send_attachment(recipient_id,message_text):
         log(r.status_code)
         log(r.text)
 
+
 #ham cau tra loi nhanh
 def send_quick_reply(recipient_id,message_text):
     log("sending quick reply to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
@@ -275,7 +346,7 @@ def web_view(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://forms.gle/E9d776uG3YnFwq5A8",
+                    "url": "https://forms.gle/Y4y39b7WnLQxbAzf7",
                     "title": "Nhap thong tin",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
