@@ -41,12 +41,12 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
                     name = get_infor(sender_id)
-                    if message_text == 'Yes':
+                    '''if message_text == 'Yes':
                         get_infor_employee(sender_id,"SDT cua ban la:")
                         SDT = messaging_event["message"]["text"]
                         get_infor_employee(sender_id,"Email cua ban la:")
                         email = messaging_event["message"]["text"]
-                        insert_employee(name,sender_id,SDT,email)
+                        insert_employee(name,sender_id,SDT,email)'''
 
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
