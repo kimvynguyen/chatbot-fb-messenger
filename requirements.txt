@@ -9,4 +9,6 @@ requests==2.10.0
 wsgiref==0.1.2
 apiclient
 discovery
+google-api-python-client
+
 
