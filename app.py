@@ -5,10 +5,9 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
-#from employee import *
+#import employee
 
 app = Flask(__name__)
-
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -40,8 +39,8 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-                    name = get_infor(sender_id)
-                    '''if message_text == 'Yes':
+                    '''name = get_infor(sender_id)
+                    if message_text == 'Yes':
                         get_infor_employee(sender_id,"SDT cua ban la:")
                         SDT = messaging_event["message"]["text"]
                         get_infor_employee(sender_id,"Email cua ban la:")
@@ -83,7 +82,7 @@ def get_infor(sender_id):
     return result['name']
 
 #ham check nhan vien
-def send_check_employee(recipient_id,message_text):
+'''def send_check_employee(recipient_id,message_text):
     log("send check employee to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -142,7 +141,7 @@ def get_infor_employee (recipient_id, message_text):
     r = requests.post("https://graph.facebook.com/v4.0/me/messages", params=params, headers=headers, data=data)
     if r.status_code != 200:
         log(r.status_code)
-        log(r.text)
+        log(r.text)'''
 
 def send_mes(recipient_id, message_text):
 
