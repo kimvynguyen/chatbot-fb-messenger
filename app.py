@@ -5,7 +5,7 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
-from employee import *
+#from employee import *
 
 app = Flask(__name__)
 
@@ -41,12 +41,12 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
                     name = get_infor(sender_id)
-                    if message_text == 'Yes':
+                    '''if message_text == 'Yes':
                         get_infor_employee(sender_id,"SDT cua ban la:")
                         SDT = messaging_event["message"]["text"]
                         get_infor_employee(sender_id,"Email cua ban la:")
                         email = messaging_event["message"]["text"]
-                        insert_employee(name,sender_id,SDT,email)
+                        insert_employee(name,sender_id,SDT,email)'''
 
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
@@ -67,7 +67,7 @@ def webhook():
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
-                        send_check_employee(sender_id,"vmarketing")
+                        #send_check_employee(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
                                          
     return "ok", 200
