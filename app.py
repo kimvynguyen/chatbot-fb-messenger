@@ -5,7 +5,7 @@ from datetime import datetime
 
 import requests
 from flask import Flask, request
-frm employee import *
+from employee import *
 
 app = Flask(__name__)
 
