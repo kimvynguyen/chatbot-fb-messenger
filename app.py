@@ -23,7 +23,6 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-
     # endpoint for processing incoming messaging events
 
     data = request.get_json()
@@ -38,6 +37,7 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
                     name = get_infor(sender_id)
+
                     if message_text == 'Giai phap khac':
                         send_message(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
@@ -47,19 +47,54 @@ def webhook():
 
                     elif message_text == 'Tu van ngay':
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
-                        #user_id = '2408679345879822'
-                        #send_mes(user_id, "Khach hang {0} dang can tuong tac voi ban!".format(res))
-                        
+                    if message_text.isdigit()== True and len(message_text)==10 :
+                        phone = message_text
+                    if message_text.find('@') != -1:
+                        email = message_text
+                    if len(phone)!= 0 and len(email) != 0:
+                        insert_employee(name,sender_id,phone,email)
+
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
+                    message_text = messaging_event["message"]["text"]
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
                         send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
                         send_attachment(sender_id,"vmarketing")
-                        #send_check_employee(sender_id,"vmarketing")
                         send_quick_reply(sender_id, "vmarketing")
+                    else:
+                        get_infor_employee(sender_id,"SDT cua ban la:")
+                        #SDT = messaging_event["message"]["text"]
+                        get_infor_employee(sender_id,"Email cua ban la:")
+                        #email = messaging_event["message"]["text"]
+                        #insert_employee(name,sender_id,SDT,email)
                                          
     return "ok", 200
+
+def link_referral(sender_id,page_id):
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+    "sender":{
+        "id": sender_id
+    },
+    "recipient":{
+        "id": page_id
+    },
+    "timestamp":1458692752478,
+    "postback":{
+        "payload":"{\"type\":\"legacy_reply_to_message_action\",\"message\":\"link\"}",
+        "referral": {
+        "ref": "id",
+        "source": "SHORTLINK",
+        "type": "OPEN_THREAD",
+        }
+    }
+    })
 
 def get_infor(sender_id):
     url = "https://graph.facebook.com/{0}".format(sender_id)
