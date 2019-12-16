@@ -47,7 +47,7 @@ def webhook():
 
                     elif message_text == 'Tu van ngay':
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
-                    if message_text.isdigit()== True and len(message_text)==10 :
+                    if len(message_text)==10 and message_text.isdigit()== True:
                         phone = message_text
                     if message_text.find('@') != -1:
                         email = message_text
