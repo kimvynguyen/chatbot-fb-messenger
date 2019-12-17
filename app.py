@@ -47,6 +47,7 @@ def webhook():
 
                     elif message_text == 'Tu van ngay':
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
+                    name =""
                     phone= ""
                     email_add =""
                     if message_text.find('@vivas.vn') != -1:
