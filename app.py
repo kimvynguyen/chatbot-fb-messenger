@@ -20,21 +20,22 @@ def verify():
 
     return "Hello world", 200
 
-
 @app.route('/', methods=['POST'])
 def webhook():
     # endpoint for processing incoming messaging events
 
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
-
+    phone =""
+    mail_add =""
     if data["object"] == "page":
 
         for entry in data["entry"]:
             for messaging_event in entry["messaging"]:
                 if messaging_event.get("message"):  # someone sent us a message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
-                    recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook I
+                    recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
+                    message_text = messaging_event["message"]["text"]  # the message's text
                     name = get_infor(sender_id)
 
                     if message_text == 'Giai phap khac':
@@ -46,23 +47,33 @@ def webhook():
 
                     elif message_text == 'Tu van ngay':
                         send_mes(sender_id,'Nhan vien cua chung toi se tu van cho ban ve cac giai phap cua Vmarketing.')
-                    if message_text.isdigit()== True and len(message_text)==10 :
-                        phone = message_text
-                    if message_text.find('@') != -1:
-                        email = message_text
-                    if len(phone)!= 0 and len(email) != 0:
-                        insert_employee(name,sender_id,phone,email)
+                    phone= ""
+                    email_add =""
+                    if message_text.find('@vivas.vn') != -1:
+                        res = message_text.split('&')
+                        phone = res[0]
+                        email_add = res[1]
+                    if email_add != "":
+                        send_mes(sender_id,"Cam on ban da nhap thong tin thanh cong.")
+                        insert_employee(name,sender_id,phone,email_add)
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]      # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
-                    message_text = messaging_event["message"]["text"]
+                    name = get_infor(sender_id)
                     if messaging_event['postback']['payload'] == "{\"type\":\"legacy_reply_to_message_action\",\"message\":\"Get Started\"}":
-                        send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
-                        send_attachment(sender_id,"vmarketing")
-                        send_quick_reply(sender_id, "vmarketing")
-                 
-                                         
+                        tmp = json.dumps(messaging_event['postback'])
+                        ref =""
+                        if tmp.find('referral') != -1:
+                            ref = messaging_event['postback']['referral']['ref']
+                        if ref =="employee":
+                            get_infor_employee(sender_id,"Vui long nhap day du thong tin cua ban :\n Dinh dang : <Ho Ten>&<email>&<so dien thoai> \n VD: Nguyen Van A&anv@vivas.vn&0919090084")                          
+                        elif ref !="employee":
+                            send_mes(sender_id, 'Chung toi quan niem: "Dung ep doanh nghiep linh hoat theo giai phap ma phai dem den giai phap linh hoat voi doanh nghiep"')
+                            send_attachment(sender_id,"vmarketing")
+                            send_quick_reply(sender_id, "vmarketing")
+                        
+                                               
     return "ok", 200
 
 def get_infor(sender_id):
@@ -302,7 +313,7 @@ def web_view(recipient_id,message_text):
             "buttons":[
                 {
                     "type": "web_url",
-                    "url": "https://forms.gle/Y4y39b7WnLQxbAzf7",
+                    "url": "https://forms.gle/HxmSVwgTHv21Qq957",
                     "title": "Nhap thong tin",
                     "webview_height_ratio": "tall",
                     "messenger_extensions": True,
