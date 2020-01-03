@@ -160,7 +160,7 @@ def send_message(recipient_id, message_text):
         "elements":[
            {
             "title":"Vmarketing",
-            "image_url":"https://61.28.233.72/images/6logo.jpg",
+            "image_url":"https://i.imgur.com/WCDh0lX.png",
             "buttons":[
                 {
                     "type": "web_url",
@@ -211,7 +211,7 @@ def send_attachment(recipient_id,message_text):
         "elements":[
            {
             "title":"Vmarketing",
-            "image_url":"https://61.28.233.72/images/6logo.jpg",
+            "image_url":"https://i.imgur.com/WCDh0lX.png",
             "buttons":[
                 {
                     "type": "web_url",
